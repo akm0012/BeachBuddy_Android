@@ -69,6 +69,9 @@ dependencies {
     // Used for creating and persisting background jobs.
     implementation 'com.birbit:android-priority-jobqueue:2.0.1'
 
+    // Joda Time
+    implementation 'net.danlew:android.joda:2.10.1'
+
     // Firebase
     implementation 'com.google.firebase:firebase-analytics:17.4.3'
     implementation 'com.google.firebase:firebase-messaging:20.2.0'

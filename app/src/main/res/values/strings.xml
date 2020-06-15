@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">BeachBuddy</string>
+    <string name="base_endpoint" translatable="false">http://localhost:30092/api</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Errors -->
+    <string name="no_network_detected">Sorry, you appear to be offline.</string>
+    <string name="timeout">Sorry, the network request timed out. Please try again later.</string>
+
 </resources>

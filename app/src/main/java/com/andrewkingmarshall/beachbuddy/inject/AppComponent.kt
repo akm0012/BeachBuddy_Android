@@ -1,5 +1,6 @@
 package com.andrewkingmarshall.beachbuddy.inject
 
+import com.andrewkingmarshall.beachbuddy.job.GetNotCompletedRequestedItemsJob
 import com.andrewkingmarshall.beachbuddy.ui.MainActivity
 import dagger.Component
 import javax.inject.Singleton
@@ -8,6 +9,6 @@ import javax.inject.Singleton
 @Component(modules = [ApplicationModule::class])
 interface AppComponent {
 
-    fun inject(mainActivity: MainActivity)
+    fun inject(job: GetNotCompletedRequestedItemsJob)
 
 }

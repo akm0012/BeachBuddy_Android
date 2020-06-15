@@ -3,12 +3,15 @@ package com.andrewkingmarshall.beachbuddy
 import android.app.Application
 import com.andrewkingmarshall.beachbuddy.database.initRealm
 import com.andrewkingmarshall.beachbuddy.inject.Injector
+import net.danlew.android.joda.JodaTimeAndroid
 import timber.log.Timber
 
 class BeachBuddyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        JodaTimeAndroid.init(this)
 
         setUpDagger()
 
