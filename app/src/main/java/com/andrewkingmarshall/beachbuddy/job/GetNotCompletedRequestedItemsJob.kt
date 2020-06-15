@@ -1,10 +1,13 @@
 package com.andrewkingmarshall.beachbuddy.job
 
+import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
+import com.andrewkingmarshall.beachbuddy.extensions.save
 import com.andrewkingmarshall.beachbuddy.inject.AppComponent
 import com.andrewkingmarshall.beachbuddy.network.service.ApiService
 import com.birbit.android.jobqueue.Params
 import com.birbit.android.jobqueue.RetryConstraint
 import timber.log.Timber
+import java.lang.Exception
 import javax.inject.Inject
 
 class GetNotCompletedRequestedItemsJob : BaseJob(Params(UI_HIGH).requireNetwork()) {
@@ -24,11 +27,20 @@ class GetNotCompletedRequestedItemsJob : BaseJob(Params(UI_HIGH).requireNetwork(
     override fun onRun() {
         Timber.i("Running job...")
 
-        var response = apiService.getNotCompletedRequestedItems()
+        val itemDtos = apiService.getNotCompletedRequestedItems().body() ?: ArrayList()
 
+        val itemsToSave = ArrayList<RequestedItem>()
 
+        for (itemDto in itemDtos) {
+            try {
+                itemsToSave.add(RequestedItem(itemDto))
+            } catch (e: Exception) {
+                Timber.w(e, "Unable to process item. Skipping it. $itemDto")
+                continue
+            }
+        }
 
-
+        itemsToSave.save()
     }
 
     override fun shouldReRunOnThrowable(throwable: Throwable, runCount: Int, maxRunCount: Int): RetryConstraint {

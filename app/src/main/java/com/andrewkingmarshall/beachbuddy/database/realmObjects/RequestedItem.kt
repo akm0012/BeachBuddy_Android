@@ -1,7 +1,10 @@
 package com.andrewkingmarshall.beachbuddy.database.realmObjects
 
+import com.andrewkingmarshall.beachbuddy.network.dtos.RequestedItemDto
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import org.joda.time.DateTime
+import java.lang.Exception
 
 open class RequestedItem(
 
@@ -25,6 +28,19 @@ open class RequestedItem(
     var requestorPhotoUrl: String = ""
 
 ) : RealmObject() {
+
+    constructor(itemDto: RequestedItemDto) : this() {
+        id = itemDto.id
+        name = itemDto.name
+        count = itemDto.count
+        isComplete = itemDto.isRequestCompleted
+        createdAtTime = DateTime(itemDto.createdDateTime).millis
+        requestorId = itemDto.requestedByUserId
+        requestorFirstName = itemDto.requestedByUser.firstName
+        requestorLastName = itemDto.requestedByUser.lastName
+        requestorPhotoUrl = itemDto.requestedByUser.photoUrl
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
