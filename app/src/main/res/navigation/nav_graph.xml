@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.andrewkingmarshall.beachbuddy.ui.DashboardFragment"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_dashboardFragment_to_requestedItemsFragment"
+            app:destination="@id/requestedItemsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/requestedItemsFragment"
+        android:name="com.andrewkingmarshall.beachbuddy.ui.RequestedItemsFragment"
+        android:label="fragment_requested_items"
+        tools:layout="@layout/fragment_requested_items" />
+</navigation>
