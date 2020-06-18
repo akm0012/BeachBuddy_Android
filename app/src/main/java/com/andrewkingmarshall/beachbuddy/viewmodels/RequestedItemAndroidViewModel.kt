@@ -24,9 +24,12 @@ class RequestedItemAndroidViewModel(application: Application) : AndroidViewModel
         return requestedItemRepository.getAllRequestedItems(realm)
     }
 
+    fun onRequestedItemChecked(requestedItem: RequestedItem) {
+
+    }
+
     override fun onCleared() {
         super.onCleared()
         realm.close()
     }
-
 }

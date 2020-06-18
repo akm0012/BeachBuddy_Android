@@ -29,7 +29,7 @@ class RequestedItemsFragment : Fragment() {
         null,
         object : RequestedItemFlexibleAdapter.InteractionListener {
             override fun onRequestedItemChecked(requestedItem: RequestedItem) {
-                requestedItem.toast(requireContext())
+                viewModel.onRequestedItemChecked(requestedItem)
             }
 
         },
