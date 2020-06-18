@@ -1,11 +1,13 @@
 package com.andrewkingmarshall.beachbuddy.job
 
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
+import com.andrewkingmarshall.beachbuddy.eventbus.GetRequestedItemEvent
 import com.andrewkingmarshall.beachbuddy.extensions.save
 import com.andrewkingmarshall.beachbuddy.inject.AppComponent
 import com.andrewkingmarshall.beachbuddy.network.service.ApiService
 import com.birbit.android.jobqueue.Params
 import com.birbit.android.jobqueue.RetryConstraint
+import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import java.lang.Exception
 import javax.inject.Inject
@@ -40,6 +42,8 @@ class GetNotCompletedRequestedItemsJob : BaseJob(Params(UI_HIGH).requireNetwork(
             }
         }
 
+        EventBus.getDefault().post(GetRequestedItemEvent(true))
+
         itemsToSave.save()
     }
 
@@ -57,5 +61,6 @@ class GetNotCompletedRequestedItemsJob : BaseJob(Params(UI_HIGH).requireNetwork(
 
     override fun onCancel(cancelReason: Int, throwable: Throwable?) {
         Timber.w("Job cancelled!")
+        EventBus.getDefault().post(GetRequestedItemEvent(true, throwable))
     }
 }

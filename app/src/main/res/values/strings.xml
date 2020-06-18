@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BeachBuddy</string>
+    <string name="app_name">Beach Buddy</string>
     <string name="base_endpoint" translatable="false">https://c34d2686e743.ngrok.io/</string>
 
     <!-- Errors -->

@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.andrewkingmarshall.beachbuddy.R
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
-import com.andrewkingmarshall.beachbuddy.extensions.toast
 import com.andrewkingmarshall.beachbuddy.ui.flexible.RequestedItemFlexibleAdapter
 import com.andrewkingmarshall.beachbuddy.ui.flexible.RequestedItemFlexibleItem
 import com.andrewkingmarshall.beachbuddy.viewmodels.RequestedItemAndroidViewModel
@@ -57,6 +58,23 @@ class RequestedItemsFragment : Fragment() {
         viewModel.getRequestedItems()
             .observe(viewLifecycleOwner, Observer { setRequestedItems(it) })
 
+        setUpSwipeToRefresh()
+
+        setUpRecyclerView()
+    }
+
+    private fun setUpSwipeToRefresh() {
+        swipeRefreshLayout.setColorSchemeColors(
+            ContextCompat.getColor(requireContext(), R.color.colorPrimary),
+            ContextCompat.getColor(requireContext(), R.color.colorAccent)
+        )
+        swipeRefreshLayout.setOnRefreshListener { viewModel.onPullToRefresh() }
+        viewModel.showLoadingEvent.observe(
+            viewLifecycleOwner,
+            Observer { swipeRefreshLayout.isRefreshing = it })
+    }
+
+    private fun setUpRecyclerView() {
         recyclerView.adapter = this.adapter
         recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
     }
