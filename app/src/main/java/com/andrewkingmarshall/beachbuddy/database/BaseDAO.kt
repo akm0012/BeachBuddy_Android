@@ -1,9 +1,11 @@
 package com.andrewkingmarshall.beachbuddy.database
 
 import android.app.Application
+import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
 import io.realm.DynamicRealm
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import io.realm.Sort
 import timber.log.Timber
 
 const val REALM_NAME = "beachbuddy.realm"
@@ -35,4 +37,10 @@ fun clearRealm() {
         }
     }
     Timber.d("Realm cleared.")
+}
+
+fun findAllRequestedItems(realm: Realm) : LiveRealmData<RequestedItem> {
+    return LiveRealmData(realm.where(RequestedItem::class.java)
+        .sort("createdAtTime", Sort.DESCENDING)
+        .findAllAsync())
 }

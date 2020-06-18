@@ -3,4 +3,46 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <!-- Generic Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="off_white">#F7F7F7</color>
+    <color name="close_to_white">#F6F6F6</color>
+    <color name="another_white">#F5F5F5</color>
+    <color name="speech_bubble_white">#F2F2F2</color>
+    <color name="light_white">#EEEEEE</color>
+    <color name="very_light_white">#EAEAEA</color>
+    <color name="white_gray">#DCDCDC</color>
+    <color name="placeholder_gray">#DBDBDB</color>
+    <color name="lighter_gray">#D8D8D8</color>
+    <color name="yet_another_gray">#CCCCCC</color>
+    <color name="another_gray">#C6C6C6</color>
+    <color name="another_darker_gray">#AAAAAA</color>
+    <color name="cancel_gray">#9B9B9B</color>
+    <color name="light_gray">#979797</color>
+    <color name="inactive_gray">#858585</color>
+    <!-- Dark Gray is my version of the Text Gray (#979797) used in Designs  -->
+    <color name="dark_gray">#4A4A4A</color>
+    <color name="black_gray">#2B2B2B</color>
+    <color name="blacker_gray">#252525</color>
+
+    <!-- Divider line color -->
+    <color name="medium_gray">#CACACA</color>
+
+    <color name="notification_red">#E80000</color>
+
+    <!-- Translucent Colors -->
+    <color name="white_30_percent_opacity">#4CFFFFFF</color>
+    <color name="white_50_percent_opacity">#80FFFFFF</color>
+    <color name="white_60_percent_opacity">#99FFFFFF</color>
+
+    <color name="black_10_percent_opacity">#19000000</color>
+    <color name="black_20_percent_opacity">#33000000</color>
+    <color name="black_25_percent_opacity">#40000000</color>
+    <color name="black_35_percent_opacity">#90000000</color>
+    <color name="black_50_percent_opacity">#80000000</color>
+    <color name="black_60_percent_opacity">#99000000</color>
+    <color name="black_70_percent_opacity">#B2000000</color>
+    <color name="black_80_percent_opacity">#CC000000</color>
+    <color name="black">#000000</color>
 </resources>

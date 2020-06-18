@@ -13,5 +13,7 @@ data class RequestedItemDto(
 
     var isRequestCompleted: Boolean,
 
-    var createdDateTime: String
+    var createdDateTime: String,
+
+    var completedDateTime: String?
 )

@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface ApiServiceEndpointInterface {
 
-    @GET("requestedItems/notCompleted")
+    @GET("api/requestedItems/notCompleted")
     fun getNonCompletedRequestedItems(): Call<List<RequestedItemDto>>
 
 }
