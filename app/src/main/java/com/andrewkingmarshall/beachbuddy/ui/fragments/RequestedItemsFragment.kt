@@ -26,6 +26,9 @@ class RequestedItemsFragment : Fragment() {
 
     lateinit var viewModel: RequestedItemAndroidViewModel
 
+    private var requestedItems: List<RequestedItem> = ArrayList()
+    private var completedItems: List<RequestedItem> = ArrayList()
+
     var adapter = RequestedItemFlexibleAdapter(
         null,
         object : RequestedItemFlexibleAdapter.InteractionListener {
@@ -58,6 +61,9 @@ class RequestedItemsFragment : Fragment() {
         viewModel.getRequestedItems()
             .observe(viewLifecycleOwner, Observer { setRequestedItems(it) })
 
+        viewModel.getAllRequestedItemsThatWereCompletedToday()
+            .observe(viewLifecycleOwner, Observer { setCompletedItems(it) })
+
         setUpSwipeToRefresh()
 
         setUpRecyclerView()
@@ -80,10 +86,25 @@ class RequestedItemsFragment : Fragment() {
     }
 
     private fun setRequestedItems(requestedItems: List<RequestedItem>) {
+        this.requestedItems = requestedItems
+        setBothRequestedAndCompletedItems(requestedItems, completedItems)
+    }
+
+    private fun setCompletedItems(completedItems: List<RequestedItem>) {
+        this.completedItems = completedItems
+        setBothRequestedAndCompletedItems(requestedItems, completedItems)
+    }
+
+    private fun setBothRequestedAndCompletedItems(requestedItems: List<RequestedItem>,
+                                                  completedItems: List<RequestedItem>) {
 
         val flexibleItemsList = ArrayList<IFlexible<*>>()
 
         requestedItems.forEach {
+            flexibleItemsList.add(RequestedItemFlexibleItem(it))
+        }
+
+        completedItems.forEach {
             flexibleItemsList.add(RequestedItemFlexibleItem(it))
         }
 

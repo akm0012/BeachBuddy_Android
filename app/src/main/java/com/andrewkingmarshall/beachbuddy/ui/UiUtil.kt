@@ -2,14 +2,20 @@ package com.andrewkingmarshall.beachbuddy.ui
 
 import android.app.Activity
 import android.content.Context
+import androidx.core.content.ContextCompat
 import com.andrewkingmarshall.beachbuddy.AppSecretHeader
 import com.andrewkingmarshall.beachbuddy.R
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.model.GlideUrl
-import com.bumptech.glide.load.model.LazyHeaderFactory
 import com.bumptech.glide.load.model.LazyHeaders
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
 import de.hdodenhof.circleimageview.CircleImageView
+import jp.wasabeef.glide.transformations.BlurTransformation
+import jp.wasabeef.glide.transformations.GrayscaleTransformation
 import timber.log.Timber
 
 
@@ -27,7 +33,8 @@ import timber.log.Timber
 fun loadCircleProfilePhoto(
     context: Context,
     imageUrl: String?,
-    circleImageView: CircleImageView?
+    circleImageView: CircleImageView?,
+    fade: Boolean = false
 ) {
     if (circleImageView == null) return
 
@@ -45,12 +52,16 @@ fun loadCircleProfilePhoto(
             .build()
     )
 
-    Glide.with(context)
-        .load(glideUrl) // Must call this when using Glide with the CircleImageView library
-        .dontAnimate()
+
+    val bitmapTransform = if (fade) {
+        RequestOptions.bitmapTransform(GrayscaleTransformation())
+    } else {
+        RequestOptions()
+    }
+
+    Glide.with(context).load(glideUrl)
+        .apply(bitmapTransform)
         .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-        .thumbnail(0.1f) // 10%
-        .circleCrop()
         .error(R.color.cancel_gray)
         .placeholder(R.color.cancel_gray)
         .into(circleImageView)

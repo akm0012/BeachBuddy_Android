@@ -87,6 +87,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
+    // Glide extensions
+    implementation 'jp.wasabeef:glide-transformations:4.0.0'
+
     // Event Bus
     implementation 'org.greenrobot:eventbus:3.1.1'
 

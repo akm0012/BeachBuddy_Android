@@ -6,6 +6,8 @@ import io.realm.DynamicRealm
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.Sort
+import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
 import timber.log.Timber
 
 const val REALM_NAME = "beachbuddy.realm"
@@ -39,8 +41,50 @@ fun clearRealm() {
     Timber.d("Realm cleared.")
 }
 
-fun findAllRequestedItems(realm: Realm) : LiveRealmData<RequestedItem> {
+fun findAllRequestedNotCompletedItems(realm: Realm) : LiveRealmData<RequestedItem> {
     return LiveRealmData(realm.where(RequestedItem::class.java)
         .sort("createdAtTime", Sort.DESCENDING)
+        .equalTo("isComplete", false)
         .findAllAsync())
+}
+
+fun findAllCompetedTodayRequestedItems(realm: Realm) : LiveRealmData<RequestedItem> {
+
+    val tomorrowStartOfDay =
+        DateTime(DateTime.now(DateTimeZone.UTC)).plusDays(1)
+            .withTimeAtStartOfDay().millis
+    val todayStartOfDay =
+        DateTime(DateTime.now(DateTimeZone.UTC))
+            .withTimeAtStartOfDay().millis
+
+    return LiveRealmData(realm.where(RequestedItem::class.java)
+        .lessThan("completedAtTime", tomorrowStartOfDay)
+        .greaterThanOrEqualTo("completedAtTime", todayStartOfDay)
+        .equalTo("isComplete", true)
+        .sort("completedAtTime", Sort.DESCENDING)
+        .findAllAsync())
+}
+
+fun markRequestedItemAsComplete(requestedItemId: String) {
+    val realm = Realm.getDefaultInstance()
+    realm.executeTransaction {
+        val itemToUpdate = it.where(RequestedItem::class.java).equalTo("id", requestedItemId).findFirst()
+        if (itemToUpdate != null) {
+            itemToUpdate.isComplete = true
+            itemToUpdate.completedAtTime = DateTime.now().millis
+        }
+    }
+    realm.close()
+}
+
+fun markRequestedItemAsNotCompleted(requestedItemId: String) {
+    val realm = Realm.getDefaultInstance()
+    realm.executeTransaction {
+        val itemToUpdate = it.where(RequestedItem::class.java).equalTo("id", requestedItemId).findFirst()
+        if (itemToUpdate != null) {
+            itemToUpdate.isComplete = false
+            itemToUpdate.completedAtTime = null
+        }
+    }
+    realm.close()
 }

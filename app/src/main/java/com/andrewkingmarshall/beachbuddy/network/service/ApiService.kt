@@ -6,6 +6,7 @@ import com.andrewkingmarshall.beachbuddy.R
 import com.andrewkingmarshall.beachbuddy.network.dtos.RequestedItemDto
 import com.andrewkingmarshall.beachbuddy.network.interceptors.ErrorInterceptor
 import com.andrewkingmarshall.beachbuddy.network.interceptors.SecretHeaderInterceptor
+import com.andrewkingmarshall.beachbuddy.network.requests.UpdateRequestedItemRequest
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -48,4 +49,9 @@ class ApiService(var context: Context) {
         return call.execute()
     }
 
+    fun updateRequestedItem(requestedItemId: String, request: UpdateRequestedItemRequest) : Response<RequestedItemDto> {
+        val call = apiServiceEndpointInterface.updateRequestedItem(requestedItemId, request)
+
+        return call.execute()
+    }
 }

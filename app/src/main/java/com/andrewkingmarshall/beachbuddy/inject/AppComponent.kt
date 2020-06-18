@@ -1,6 +1,7 @@
 package com.andrewkingmarshall.beachbuddy.inject
 
 import com.andrewkingmarshall.beachbuddy.job.GetNotCompletedRequestedItemsJob
+import com.andrewkingmarshall.beachbuddy.job.PostCompleteRequestedItemJob
 import com.andrewkingmarshall.beachbuddy.repository.RequestedItemRepository
 import com.andrewkingmarshall.beachbuddy.ui.fragments.RequestedItemsFragment
 import com.andrewkingmarshall.beachbuddy.ui.views.viewmodels.RequestedItemViewModel
@@ -13,6 +14,7 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun inject(job: GetNotCompletedRequestedItemsJob)
+    fun inject(job: PostCompleteRequestedItemJob)
 
     fun inject(pokoViewModel: RequestedItemViewModel)
 

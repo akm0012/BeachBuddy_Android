@@ -1,6 +1,7 @@
 package com.andrewkingmarshall.beachbuddy.ui.views
 
 import android.content.Context
+import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -40,6 +41,9 @@ class RequestedItemView : FrameLayout {
         subtitleTextView.text = ""
 
         profileImageView.setImageDrawable(null)
+
+        itemTitleTextView.paintFlags = itemTitleTextView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+        subtitleTextView.paintFlags = subtitleTextView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
     }
 
     fun setViewModel(viewModel: RequestedItemViewModel) {
@@ -50,10 +54,19 @@ class RequestedItemView : FrameLayout {
 
         subtitleTextView.text = viewModel.getSubTitle()
 
-        loadCircleProfilePhoto(context, viewModel.getProfilePhotoUrl(), profileImageView)
-
         if (viewModel.isChecked()) {
+
+            checkboxImageView.isEnabled = false
             checkboxImageView.setImageResource(R.drawable.ic_check_circle_grey_24dp)
+
+            // Strike through the TextViews
+            itemTitleTextView.paintFlags = itemTitleTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            subtitleTextView.paintFlags = subtitleTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+
+            loadCircleProfilePhoto(context, viewModel.getProfilePhotoUrl(), profileImageView, true)
+
+        } else {
+            loadCircleProfilePhoto(context, viewModel.getProfilePhotoUrl(), profileImageView)
         }
     }
 

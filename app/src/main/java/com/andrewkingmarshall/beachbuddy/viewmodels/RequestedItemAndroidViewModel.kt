@@ -31,8 +31,12 @@ class RequestedItemAndroidViewModel(application: Application) : AndroidViewModel
         return requestedItemRepository.getAllRequestedItems(realm)
     }
 
-    fun onRequestedItemChecked(requestedItem: RequestedItem) {
+    fun getAllRequestedItemsThatWereCompletedToday(): LiveData<List<RequestedItem>> {
+        return requestedItemRepository.getAllRequestedItemsThatWereCompletedToday(realm)
+    }
 
+    fun onRequestedItemChecked(requestedItem: RequestedItem) {
+        requestedItemRepository.markRequestedItemAsComplete(requestedItem)
     }
 
     fun onPullToRefresh() {
