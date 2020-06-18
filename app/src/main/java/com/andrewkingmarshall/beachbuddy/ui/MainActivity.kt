@@ -2,6 +2,8 @@ package com.andrewkingmarshall.beachbuddy.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -9,13 +11,21 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.andrewkingmarshall.beachbuddy.R
+import com.andrewkingmarshall.beachbuddy.viewmodels.MainActivityAndroidViewModel
+import com.andrewkingmarshall.beachbuddy.viewmodels.RequestedItemAndroidViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var viewModel: MainActivityAndroidViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        viewModel =
+            ViewModelProvider(this).get(MainActivityAndroidViewModel::class.java)
+
         setUpNavigation()
     }
 
@@ -27,6 +37,10 @@ class MainActivity : AppCompatActivity() {
 
         bottom_navigation_view.setupWithNavController(navController)
 
-        bottom_navigation_view.getOrCreateBadge(R.id.requestedItemsFragment).number = 2
+        viewModel.getNumberOfNotCompletedRequestedItems().observe(this, Observer {
+            it.let {
+                bottom_navigation_view.getOrCreateBadge(R.id.requestedItemsFragment).number = it
+            }
+        })
     }
 }

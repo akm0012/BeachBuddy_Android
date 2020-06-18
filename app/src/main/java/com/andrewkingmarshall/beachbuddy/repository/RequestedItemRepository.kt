@@ -22,7 +22,7 @@ class RequestedItemRepository {
         Injector.obtain().inject(this)
     }
 
-    fun getAllRequestedItems(realm: Realm): LiveData<List<RequestedItem>> {
+    fun getNotCompletedRequestedItems(realm: Realm): LiveData<List<RequestedItem>> {
 
         refreshRequestedItems()
 

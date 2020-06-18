@@ -28,7 +28,7 @@ class RequestedItemAndroidViewModel(application: Application) : AndroidViewModel
     }
 
     fun getRequestedItems(): LiveData<List<RequestedItem>> {
-        return requestedItemRepository.getAllRequestedItems(realm)
+        return requestedItemRepository.getNotCompletedRequestedItems(realm)
     }
 
     fun getAllRequestedItemsThatWereCompletedToday(): LiveData<List<RequestedItem>> {
