@@ -5,6 +5,7 @@ import android.content.Context
 import com.andrewkingmarshall.beachbuddy.AppSecretHeader
 import com.andrewkingmarshall.beachbuddy.R
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaderFactory
 import com.bumptech.glide.load.model.LazyHeaders
@@ -47,6 +48,7 @@ fun loadCircleProfilePhoto(
     Glide.with(context)
         .load(glideUrl) // Must call this when using Glide with the CircleImageView library
         .dontAnimate()
+        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
         .thumbnail(0.1f) // 10%
         .circleCrop()
         .error(R.color.cancel_gray)
