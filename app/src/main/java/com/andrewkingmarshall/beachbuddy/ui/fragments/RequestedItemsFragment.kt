@@ -1,5 +1,6 @@
 package com.andrewkingmarshall.beachbuddy.ui.fragments
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.andrewkingmarshall.beachbuddy.R
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
 import com.andrewkingmarshall.beachbuddy.extensions.toast
@@ -21,6 +21,7 @@ import com.andrewkingmarshall.beachbuddy.ui.views.CompletedItemsHeaderView
 import com.andrewkingmarshall.beachbuddy.viewmodels.RequestedItemAndroidViewModel
 import eu.davidea.flexibleadapter.items.IFlexible
 import kotlinx.android.synthetic.main.fragment_requested_items.*
+
 
 /**
  * This fragment will show all the Requested Items that people want brought out to the beach.

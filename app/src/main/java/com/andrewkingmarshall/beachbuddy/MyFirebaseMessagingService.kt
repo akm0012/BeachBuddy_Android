@@ -4,19 +4,26 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.media.RingtoneManager
 import androidx.core.app.NotificationCompat
 import com.andrewkingmarshall.beachbuddy.inject.Injector
 import com.andrewkingmarshall.beachbuddy.repository.FirebaseRepository
+import com.andrewkingmarshall.beachbuddy.repository.RequestedItemRepository
 import com.andrewkingmarshall.beachbuddy.ui.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import timber.log.Timber
+import javax.inject.Inject
 
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
+    @Inject
     lateinit var firebaseRepository: FirebaseRepository
+
+    @Inject
+    lateinit var requestedItemRepository: RequestedItemRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -47,33 +54,33 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         remoteMessage.data.isNotEmpty().let {
             Timber.d("Message data payload: ${remoteMessage.data}")
 
-            var teamId = ""
+            // Refresh the Requested Item data
+            handleNow()
 
-            // Refresh Data if there is a Team Id
-            remoteMessage.data["teamId"]?.let {
-                teamId = it
-                handleNow(it)
+            // Todo Play Seagull noise (Using Event Bus so it will only work when app is up.)
+
+            remoteMessage.data["updateOnly"]?.let {
+                Timber.d("updateOnly: $it")
+
+                // Play a Seagull noise
+                if (it == "false") {
+                    val mPlayer: MediaPlayer = MediaPlayer.create(applicationContext, R.raw.seagulls)
+                    mPlayer.start()
+                }
             }
 
-            // Send a notification todo: Only if app is not in forground
-            remoteMessage.data["messageText"]?.let {
+            remoteMessage.data["name"]?.let {
+                Timber.d("name: $it")
+            }
 
-                // Check if this messageId is already in the DAO. If so, we don't need to send a Notification
-                // Fixes issue where you get a notification for a text you just sent.
-                val messageId = remoteMessage.data["messageId"]
-//                if (!messageRepository.doesMessageExistLocally(messageId)) {
-//                    sendNotification(messageId, teamRepository.getTeamName(teamId), it, teamId)
-//                } else {
-//                    Timber.d("Message already exists in database. We must have sent this message. Not showing Push Notification.")
-//                }
+            remoteMessage.data["count"]?.let {
+                Timber.d("count: $it")
+            }
+
+            remoteMessage.data["sentByUserId"]?.let {
+                Timber.d("sentByUserId: $it")
             }
         }
-
-        // Check if message contains a notification payload.
-        remoteMessage.notification?.let {
-            Timber.d("Message Notification Body: ${it.body}")
-        }
-
     }
 
     /**
@@ -83,7 +90,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      */
     override fun onNewToken(token: String) {
         Timber.d("Refreshed token: $token")
-        Injector.obtain().inject(this)
 
         firebaseRepository.registerFCMToken(token)
     }
@@ -91,10 +97,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     /**
      * Handle time allotted to BroadcastReceivers.
      */
-    private fun handleNow(teamId: String) {
-        Timber.d("Refreshing Team List and Messages for Team $teamId")
-//        messageRepository.refreshMessagesForTeam(teamId)
-//        teamRepository.refreshTeamList()
+    private fun handleNow() {
+        Timber.d("Refreshing Requested Items.")
+
+        requestedItemRepository.refreshRequestedItems()
     }
 
     /**
