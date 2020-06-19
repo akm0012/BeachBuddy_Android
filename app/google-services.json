@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "853458633893",
+    "firebase_url": "https://beachbuddy-35d79.firebaseio.com",
+    "project_id": "beachbuddy-35d79",
+    "storage_bucket": "beachbuddy-35d79.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853458633893:android:14e0c799566caae361394c",
+        "android_client_info": {
+          "package_name": "com.andrewkingmarshall.beachbuddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853458633893-qlvoakjr6g01m36cm3ipcg6tgfphtdfo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaaJ0NABvSyUpLup2KNISnNktOSNEnSLU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "853458633893-qlvoakjr6g01m36cm3ipcg6tgfphtdfo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
