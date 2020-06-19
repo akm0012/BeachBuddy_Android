@@ -50,6 +50,10 @@ class RequestedItemAndroidViewModel(application: Application) : AndroidViewModel
         if (event.isDone || event.error != null) {
             showLoadingEvent.value = false
         }
+
+        if (event.error != null) {
+            showToast.value = event.error.localizedMessage
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -13,7 +13,10 @@ import timber.log.Timber
 import java.lang.Exception
 import javax.inject.Inject
 
-class GetNotCompletedRequestedItemsJob : BaseJob(Params(UI_HIGH).requireNetwork()) {
+class GetNotCompletedRequestedItemsJob : BaseJob(
+    Params(UI_HIGH).requireNetwork()
+        .singleInstanceBy(GetNotCompletedRequestedItemsJob::class.simpleName)
+) {
 
     @Inject
     lateinit var apiService: ApiService
@@ -49,16 +52,22 @@ class GetNotCompletedRequestedItemsJob : BaseJob(Params(UI_HIGH).requireNetwork(
         itemsToSave.save()
     }
 
-    override fun shouldReRunOnThrowable(throwable: Throwable, runCount: Int, maxRunCount: Int): RetryConstraint {
+    override fun shouldReRunOnThrowable(
+        throwable: Throwable,
+        runCount: Int,
+        maxRunCount: Int
+    ): RetryConstraint {
         Timber.w("Error while running job: ${throwable.localizedMessage}")
 
-        if (checkFor400Error(throwable)) {
-            return RetryConstraint.CANCEL
-        }
+        return RetryConstraint.CANCEL
 
-        val retryConstraint = RetryConstraint.createExponentialBackoff(runCount, INITIAL_BACK_OFF_DELAY_MS)
-        Timber.d("Going to retry: $retryConstraint")
-        return retryConstraint
+//        if (checkFor400Error(throwable)) {
+//            return RetryConstraint.CANCEL
+//        }
+//
+//        val retryConstraint = RetryConstraint.createExponentialBackoff(runCount, INITIAL_BACK_OFF_DELAY_MS)
+//        Timber.d("Going to retry: $retryConstraint")
+//        return retryConstraint
     }
 
     override fun onCancel(cancelReason: Int, throwable: Throwable?) {

@@ -49,10 +49,10 @@ fun findAllRequestedNotCompletedItems(realm: Realm) : LiveRealmData<RequestedIte
 fun findAllCompetedTodayRequestedItems(realm: Realm) : LiveRealmData<RequestedItem> {
 
     val tomorrowStartOfDay =
-        DateTime(DateTime.now(DateTimeZone.UTC)).plusDays(1)
+        DateTime(DateTime.now(DateTimeZone.getDefault())).plusDays(1)
             .withTimeAtStartOfDay().millis
     val todayStartOfDay =
-        DateTime(DateTime.now(DateTimeZone.UTC))
+        DateTime(DateTime.now(DateTimeZone.getDefault()))
             .withTimeAtStartOfDay().millis
 
     return LiveRealmData(realm.where(RequestedItem::class.java)
