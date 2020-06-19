@@ -14,6 +14,7 @@ import com.andrewkingmarshall.beachbuddy.R
 import com.andrewkingmarshall.beachbuddy.viewmodels.MainActivityAndroidViewModel
 import com.andrewkingmarshall.beachbuddy.viewmodels.RequestedItemAndroidViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.IllegalStateException
 
 class MainActivity : AppCompatActivity() {
 
