@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
 import com.andrewkingmarshall.beachbuddy.eventbus.GetRequestedItemEvent
+import com.andrewkingmarshall.beachbuddy.eventbus.PostUpdateRequestedItemEvent
 import com.andrewkingmarshall.beachbuddy.inject.Injector
 import com.andrewkingmarshall.beachbuddy.repository.RequestedItemRepository
 import io.realm.Realm
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 class RequestedItemAndroidViewModel(application: Application) : AndroidViewModel(application) {
 
+    val showToast: SingleLiveEvent<String> = SingleLiveEvent()
     val showLoadingEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
 
     @Inject
@@ -47,6 +49,13 @@ class RequestedItemAndroidViewModel(application: Application) : AndroidViewModel
     fun onGetRecentActivityStatusEvent(event: GetRequestedItemEvent) {
         if (event.isDone || event.error != null) {
             showLoadingEvent.value = false
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onPostUpdateRequestedItemEvent(event: PostUpdateRequestedItemEvent) {
+        if (event.error != null) {
+            showToast.value = event.error.localizedMessage
         }
     }
 

@@ -38,7 +38,10 @@ class MainActivity : AppCompatActivity() {
         bottom_navigation_view.setupWithNavController(navController)
 
         viewModel.getNumberOfNotCompletedRequestedItems().observe(this, Observer {
-            it.let {
+
+            if (it == null || it == 0) {
+                bottom_navigation_view.removeBadge(R.id.requestedItemsFragment)
+            } else {
                 bottom_navigation_view.getOrCreateBadge(R.id.requestedItemsFragment).number = it
             }
         })

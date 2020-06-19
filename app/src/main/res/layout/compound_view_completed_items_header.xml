@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/emptyStateImageView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:tint="@color/colorAccent"
+        android:src="@drawable/ic_beach_access_black_24dp"
+        app:layout_constraintBottom_toTopOf="@id/emptyStateTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/emptyStateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="1.2dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/requested_items_empty_state_message"
+        android:textColor="@color/dark_gray"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/completedTodayTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/emptyStateImageView"/>
+
+    <TextView
+        android:id="@+id/completedTodayTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
+        android:text="Completed Today"
+        android:textAllCaps="true"
+        android:textColor="@color/cool"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/emptyStateTextView"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="10dp"
+        android:background="@color/cool_lite"
+        app:layout_constraintBottom_toBottomOf="@id/completedTodayTextView"
+        app:layout_constraintEnd_toStartOf="@id/completedTodayTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/completedTodayTextView" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="30dp"
+        android:background="@color/cool_lite"
+        app:layout_constraintBottom_toBottomOf="@id/completedTodayTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/completedTodayTextView"
+        app:layout_constraintTop_toTopOf="@id/completedTodayTextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

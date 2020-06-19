@@ -1,5 +1,6 @@
 package com.andrewkingmarshall.beachbuddy.job
 
+import com.andrewkingmarshall.beachbuddy.database.purgeDeletedRequestedItems
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
 import com.andrewkingmarshall.beachbuddy.eventbus.GetRequestedItemEvent
 import com.andrewkingmarshall.beachbuddy.extensions.save
@@ -44,6 +45,7 @@ class GetNotCompletedRequestedItemsJob : BaseJob(Params(UI_HIGH).requireNetwork(
 
         EventBus.getDefault().post(GetRequestedItemEvent(true))
 
+        purgeDeletedRequestedItems(validRequestedItems = itemsToSave)
         itemsToSave.save()
     }
 

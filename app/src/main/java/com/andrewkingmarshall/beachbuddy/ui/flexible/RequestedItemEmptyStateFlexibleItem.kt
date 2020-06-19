@@ -12,21 +12,19 @@ import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.flexibleadapter.items.IHeader
 import eu.davidea.viewholders.FlexibleViewHolder
 
-class RequestedItemFlexibleItem(var requestedItem: RequestedItem, header: IHeader<*>?):
-    AbstractSectionableItem<RequestedItemFlexibleItem.RequestedItemViewHolder, IHeader<*>>(header) {
+class RequestedItemEmptyStateFlexibleItem():
+    AbstractSectionableItem<RequestedItemEmptyStateFlexibleItem.RequestedItemViewHolder, IHeader<*>>(null) {
 
     override fun equals(other: Any?): Boolean {
-        return if (other is RequestedItem) {
-            this.requestedItem.id == other.id
-        } else false
+        return true
     }
 
     override fun hashCode(): Int {
-        return requestedItem.hashCode()
+        return 1
     }
 
     override fun getLayoutRes(): Int {
-        return R.layout.container_requested_item_view
+        return R.layout.compound_view_completed_items_empty_state
     }
 
     override fun createViewHolder(
@@ -42,20 +40,10 @@ class RequestedItemFlexibleItem(var requestedItem: RequestedItem, header: IHeade
         position: Int,
         callbacks: MutableList<Any>?
     ) {
-        holder?.requestedItemView?.setViewModel(RequestedItemViewModel(requestedItem))
 
-        holder?.requestedItemView?.interactionListener = object : RequestedItemView.InteractionListener {
-            override fun onCheckboxClicked() {
-                holder?.listener?.onRequestedItemChecked(requestedItem)
-            }
-        }
     }
 
     inner class RequestedItemViewHolder(view: View?, adapter: RequestedItemFlexibleAdapter) :
         FlexibleViewHolder(view, adapter) {
-
-        var requestedItemView: RequestedItemView = view as RequestedItemView
-
-        var listener: RequestedItemFlexibleAdapter.InteractionListener? = adapter.listener
     }
 }

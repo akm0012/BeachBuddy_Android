@@ -13,8 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.andrewkingmarshall.beachbuddy.R
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
+import com.andrewkingmarshall.beachbuddy.extensions.toast
+import com.andrewkingmarshall.beachbuddy.ui.flexible.RequestedItemEmptyStateFlexibleItem
 import com.andrewkingmarshall.beachbuddy.ui.flexible.RequestedItemFlexibleAdapter
 import com.andrewkingmarshall.beachbuddy.ui.flexible.RequestedItemFlexibleItem
+import com.andrewkingmarshall.beachbuddy.ui.views.CompletedItemsHeaderView
 import com.andrewkingmarshall.beachbuddy.viewmodels.RequestedItemAndroidViewModel
 import eu.davidea.flexibleadapter.items.IFlexible
 import kotlinx.android.synthetic.main.fragment_requested_items.*
@@ -64,6 +67,9 @@ class RequestedItemsFragment : Fragment() {
         viewModel.getAllRequestedItemsThatWereCompletedToday()
             .observe(viewLifecycleOwner, Observer { setCompletedItems(it) })
 
+        viewModel.showToast
+            .observe(viewLifecycleOwner, Observer { it.toast(requireContext()) })
+
         setUpSwipeToRefresh()
 
         setUpRecyclerView()
@@ -101,11 +107,17 @@ class RequestedItemsFragment : Fragment() {
         val flexibleItemsList = ArrayList<IFlexible<*>>()
 
         requestedItems.forEach {
-            flexibleItemsList.add(RequestedItemFlexibleItem(it))
+            flexibleItemsList.add(RequestedItemFlexibleItem(it, null))
         }
 
+        val headerView = CompletedItemsHeaderView(requestedItems.isEmpty())
+
         completedItems.forEach {
-            flexibleItemsList.add(RequestedItemFlexibleItem(it))
+            flexibleItemsList.add(RequestedItemFlexibleItem(it, headerView))
+        }
+
+        if (requestedItems.isEmpty() && completedItems.isEmpty()) {
+            flexibleItemsList.add(RequestedItemEmptyStateFlexibleItem())
         }
 
         adapter.updateDataSet(flexibleItemsList)

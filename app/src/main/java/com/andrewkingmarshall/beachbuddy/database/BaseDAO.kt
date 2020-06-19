@@ -2,13 +2,11 @@ package com.andrewkingmarshall.beachbuddy.database
 
 import android.app.Application
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
-import io.realm.DynamicRealm
-import io.realm.Realm
-import io.realm.RealmConfiguration
-import io.realm.Sort
+import io.realm.*
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import timber.log.Timber
+import java.util.*
 
 const val REALM_NAME = "beachbuddy.realm"
 
@@ -87,4 +85,39 @@ fun markRequestedItemAsNotCompleted(requestedItemId: String) {
         }
     }
     realm.close()
+}
+
+/**
+ * This will delete any Requested Item that is:
+ * 1. Not Completed
+ * 2. Not in the list of Valid Messages.
+ */
+fun purgeDeletedRequestedItems(
+    validRequestedItems: List<RequestedItem>?
+) {
+    val realmOuter = Realm.getDefaultInstance()
+    realmOuter.executeTransaction { realm: Realm ->
+        val validItemIds =
+            ArrayList<String>()
+        for (item in validRequestedItems!!) {
+            validItemIds.add(item.id)
+        }
+        val validItemIdsArray =
+            validItemIds.toTypedArray()
+        val invalidItems: RealmResults<RequestedItem>
+        invalidItems = if (validItemIdsArray.isEmpty()) {
+            // We need to delete all of them if there are no valid results.
+            realm.where(RequestedItem::class.java)
+                .equalTo("isComplete", false)
+                .findAll()
+        } else {
+            realm.where(RequestedItem::class.java)
+                .equalTo("isComplete", false)
+                .not().`in`("id", validItemIdsArray)
+                .findAll()
+        }
+        Timber.d("Purging ${invalidItems.size} Requested Items.")
+        invalidItems.deleteAllFromRealm()
+    }
+    realmOuter.close()
 }

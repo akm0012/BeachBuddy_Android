@@ -4,6 +4,7 @@ import com.andrewkingmarshall.beachbuddy.database.markRequestedItemAsComplete
 import com.andrewkingmarshall.beachbuddy.database.markRequestedItemAsNotCompleted
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
 import com.andrewkingmarshall.beachbuddy.eventbus.GetRequestedItemEvent
+import com.andrewkingmarshall.beachbuddy.eventbus.PostUpdateRequestedItemEvent
 import com.andrewkingmarshall.beachbuddy.extensions.save
 import com.andrewkingmarshall.beachbuddy.inject.AppComponent
 import com.andrewkingmarshall.beachbuddy.network.requests.UpdateRequestedItemRequest
@@ -49,6 +50,8 @@ class PostCompleteRequestedItemJob(
                 Timber.w(e, "Unable to process item. Skipping it. $itemDto")
             }
         }
+
+        EventBus.getDefault().post(PostUpdateRequestedItemEvent(true))
     }
 
     override fun shouldReRunOnThrowable(
@@ -58,18 +61,12 @@ class PostCompleteRequestedItemJob(
     ): RetryConstraint {
         Timber.w("Error while running job: ${throwable.localizedMessage}")
 
-        if (checkFor400Error(throwable)) {
-            return RetryConstraint.CANCEL
-        }
-
-        val retryConstraint =
-            RetryConstraint.createExponentialBackoff(runCount, INITIAL_BACK_OFF_DELAY_MS)
-        Timber.d("Going to retry: $retryConstraint")
-        return retryConstraint
+        return RetryConstraint.CANCEL
     }
 
     override fun onCancel(cancelReason: Int, throwable: Throwable?) {
         Timber.w("Job cancelled!")
-//        markRequestedItemAsNotCompleted(requestedItemId)
+        markRequestedItemAsNotCompleted(requestedItemId)
+        EventBus.getDefault().post(PostUpdateRequestedItemEvent(true, throwable))
     }
 }
