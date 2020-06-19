@@ -1,8 +1,10 @@
 package com.andrewkingmarshall.beachbuddy.network.service
 
 import com.andrewkingmarshall.beachbuddy.network.dtos.RequestedItemDto
+import com.andrewkingmarshall.beachbuddy.network.requests.AddDeviceRequest
 import com.andrewkingmarshall.beachbuddy.network.requests.UpdateRequestedItemRequest
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -19,4 +21,6 @@ interface ApiServiceEndpointInterface {
         @Body request: UpdateRequestedItemRequest
     ): Call<RequestedItemDto>
 
+    @POST("api/devices")
+    fun addDevice(@Body addDeviceRequest: AddDeviceRequest): Call<Void>
 }

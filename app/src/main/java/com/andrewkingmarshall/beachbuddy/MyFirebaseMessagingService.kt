@@ -7,6 +7,7 @@ import android.content.Intent
 import android.media.RingtoneManager
 import androidx.core.app.NotificationCompat
 import com.andrewkingmarshall.beachbuddy.inject.Injector
+import com.andrewkingmarshall.beachbuddy.repository.FirebaseRepository
 import com.andrewkingmarshall.beachbuddy.ui.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -15,6 +16,7 @@ import timber.log.Timber
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
+    lateinit var firebaseRepository: FirebaseRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -81,11 +83,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      */
     override fun onNewToken(token: String) {
         Timber.d("Refreshed token: $token")
+        Injector.obtain().inject(this)
 
-        // If you want to send messages to this application instance or
-        // manage this apps subscriptions on the server side, send the
-        // Instance ID token to your app server.
-        sendRegistrationToServer(token)
+        firebaseRepository.registerFCMToken(token)
     }
 
     /**
@@ -95,19 +95,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Timber.d("Refreshing Team List and Messages for Team $teamId")
 //        messageRepository.refreshMessagesForTeam(teamId)
 //        teamRepository.refreshTeamList()
-    }
-
-    /**
-     * Persist token to third-party servers.
-     *
-     * Modify this method to associate the user's FCM InstanceID token with any server-side account
-     * maintained by your application.
-     *
-     * @param token The new token.
-     */
-    private fun sendRegistrationToServer(token: String?) {
-        Timber.d("New token was retrieved. Registering Token")
-//        token?.let { firebaseRepository.registerFCMToken(it) }
     }
 
     /**

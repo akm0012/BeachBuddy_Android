@@ -6,12 +6,16 @@ import com.andrewkingmarshall.beachbuddy.R
 import com.andrewkingmarshall.beachbuddy.network.dtos.RequestedItemDto
 import com.andrewkingmarshall.beachbuddy.network.interceptors.ErrorInterceptor
 import com.andrewkingmarshall.beachbuddy.network.interceptors.SecretHeaderInterceptor
+import com.andrewkingmarshall.beachbuddy.network.requests.AddDeviceRequest
 import com.andrewkingmarshall.beachbuddy.network.requests.UpdateRequestedItemRequest
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Path
 
 class ApiService(var context: Context) {
 
@@ -53,5 +57,11 @@ class ApiService(var context: Context) {
         val call = apiServiceEndpointInterface.updateRequestedItem(requestedItemId, request)
 
         return call.execute()
+    }
+
+    fun addDevice(addDeviceRequest: AddDeviceRequest, callback: Callback<Void>) {
+        val call = apiServiceEndpointInterface.addDevice(addDeviceRequest)
+
+        call.enqueue(callback)
     }
 }

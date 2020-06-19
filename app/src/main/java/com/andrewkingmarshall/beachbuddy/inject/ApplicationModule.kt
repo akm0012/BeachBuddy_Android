@@ -4,6 +4,7 @@ import android.content.Context
 import com.andrewkingmarshall.beachbuddy.BeachBuddyApplication
 import com.andrewkingmarshall.beachbuddy.job.BaseJob
 import com.andrewkingmarshall.beachbuddy.network.service.ApiService
+import com.andrewkingmarshall.beachbuddy.repository.FirebaseRepository
 import com.andrewkingmarshall.beachbuddy.repository.RequestedItemRepository
 import com.birbit.android.jobqueue.Job
 import com.birbit.android.jobqueue.JobManager
@@ -33,6 +34,12 @@ class ApplicationModule(
     @Singleton
     fun provideRequestedItemRepository(): RequestedItemRepository {
         return RequestedItemRepository()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseRepository(): FirebaseRepository {
+        return FirebaseRepository()
     }
 
     @Provides
