@@ -25,7 +25,8 @@ class DashboardFragment : Fragment() {
         sunsetTimerView.setSunsetSunriseTimes(
             1592735774000,
             1592785675000,
-            1592735774000
+            1592735774000,
+            0
         )
         sunsetTimerView.startTimer()
     }
