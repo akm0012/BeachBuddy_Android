@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:background="@color/light_gray"
+    tools:parentTag="android.widget.FrameLayout">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="5dp"
+        app:cardBackgroundColor="@color/white">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/standard_padding">
+
+            <com.github.lzyzsd.circleprogress.ArcProgress
+                android:id="@+id/arcProgressView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:arc_bottom_text="SUNSET"
+                app:arc_finished_color="@color/colorAccent"
+                app:arc_max="100"
+                tools:arc_progress="50"
+                app:arc_stroke_width="8dp"
+                app:arc_suffix_text=" "
+                app:arc_text_color="@color/dashboard_text"
+                app:arc_text_size="0sp"
+                app:arc_unfinished_color="@color/lighter_gray"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/sunsetCountDownTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dashboard_large_text_size"
+                android:textColor="@color/dashboard_text_dark"
+                app:layout_constraintBottom_toTopOf="@id/sunsetTimeTextView"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintEnd_toEndOf="@id/arcProgressView"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintStart_toStartOf="@id/arcProgressView"
+                app:layout_constraintTop_toTopOf="@id/arcProgressView"
+                tools:text="16h 25m" />
+
+            <TextView
+                android:id="@+id/sunsetTimeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/dashboard_text"
+                android:textSize="@dimen/dashboard_small_text_size"
+                app:layout_constraintBottom_toBottomOf="@id/arcProgressView"
+                app:layout_constraintEnd_toEndOf="@id/arcProgressView"
+                app:layout_constraintStart_toStartOf="@id/arcProgressView"
+                app:layout_constraintTop_toBottomOf="@id/sunsetCountDownTextView"
+                tools:text="8:52 pm" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</merge>
