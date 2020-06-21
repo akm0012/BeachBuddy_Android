@@ -1,14 +1,20 @@
 package com.andrewkingmarshall.beachbuddy.ui.views.viewmodels
 
+import com.crashlytics.android.Crashlytics
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import org.joda.time.Period
+import timber.log.Timber
+import java.lang.IllegalStateException
 
 class SunsetTimerViewModel(
     private val sunrise: Long,
     private val sunset: Long,
-    private val sunriseNextDay: Long
+    private val sunriseNextDay: Long,
+    private val sunsetPrevDay: Long
 ) {
+
+    var hasErrorBeenReportedOnce = false
 
     fun getBottomLabel(currentTime: Long): String {
         return if (currentTime > sunset) {
@@ -51,34 +57,38 @@ class SunsetTimerViewModel(
     }
 
     fun getProgressInt(currentTime: Long): Int {
-        // Fixme: This is technically wrong as we are not using the sunrise time from the next day, but it's close enough
 
+        when {
+            currentTime in sunrise until sunset -> {
+                // Mid day before sunset
+                return (((currentTime - sunrise).toDouble() / (sunset - sunrise)) * 100).toInt()
+            }
+            currentTime > sunrise && currentTime > sunset -> {
+                // Night time before midnight
+                return (((currentTime - sunset).toDouble() / (sunriseNextDay - sunset)) * 100).toInt()
+            }
+            currentTime < sunrise -> {
+                // Night time after midnight, before sunrise
+                return (((currentTime - sunsetPrevDay).toDouble() / (sunrise - sunsetPrevDay)) * 100).toInt()
+            }
+            else -> {
+                val error =
+                    IllegalStateException("We don't know what to do! " +
+                            "[currentTime = $currentTime], " +
+                            "[sunrise = $sunrise], " +
+                            "[sunset = $sunset], " +
+                            "[sunriseNextDay = $sunriseNextDay], " +
+                            "[sunsetPrevDay = $sunsetPrevDay]")
 
-        return if (currentTime > sunset || currentTime < sunrise) {
-            // We want to show the progress until sunrise
+                Timber.e(error)
 
-            // sunset: 100
-            // current time: 290
-            // sunrise: 300
+                if (!hasErrorBeenReportedOnce) {
+                    Crashlytics.logException(error)
+                    hasErrorBeenReportedOnce = true
+                }
 
-            // (current time - sunset) / (sunrise - sunset)
-
-            // Millis in a day
-//            val millisInDay = 24 * 60 * 60 * 1000
-            val millisInDay = 0
-
-            val midnight = DateTime().withZone(DateTimeZone.getDefault()).withTimeAtStartOfDay()
-
-            val sunriseAdjusted = sunrise + millisInDay
-
-            (((currentTime - sunset) / (sunriseAdjusted - sunset)) * 100).toInt()
-        } else {
-            // We want to show the progress until sunset
-
-            // sunset: 400
-            // current time: 290
-            // sunrise: 200
-            (((currentTime - sunrise) / (sunset - sunrise)) * 100).toInt()
+                return 0
+            }
         }
     }
 

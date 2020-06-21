@@ -29,9 +29,10 @@ class SunsetTimerView : FrameLayout {
     fun setSunsetSunriseTimes(
         sunrise: Long,
         sunset: Long,
-        sunriseNextDay: Long
+        sunriseNextDay: Long,
+        sunsetPrevDay: Long
     ) {
-        viewModel = SunsetTimerViewModel(sunrise, sunset, sunriseNextDay)
+        viewModel = SunsetTimerViewModel(sunrise, sunset, sunriseNextDay, sunsetPrevDay)
     }
 
     fun startTimer() {

@@ -23,7 +23,7 @@
                 android:id="@+id/arcProgressView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:arc_bottom_text="SUNSET"
+                app:arc_bottom_text="Loading..."
                 app:arc_finished_color="@color/colorAccent"
                 app:arc_max="100"
                 tools:arc_progress="50"
