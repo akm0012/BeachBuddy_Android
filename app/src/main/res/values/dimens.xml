@@ -3,6 +3,11 @@
     <dimen name="standard_padding">16dp</dimen>
 
     <dimen name="dashboard_large_text_size">22sp</dimen>
+
+    <dimen name="dashboard_normal_text_size">16sp</dimen>
+
     <dimen name="dashboard_small_text_size">12sp</dimen>
+
+    <dimen name="profile_circle_size">55dp</dimen>
 
 </resources>
