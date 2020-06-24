@@ -3,6 +3,7 @@ package com.andrewkingmarshall.beachbuddy.network.service
 import android.content.Context
 import com.andrewkingmarshall.beachbuddy.BuildConfig
 import com.andrewkingmarshall.beachbuddy.R
+import com.andrewkingmarshall.beachbuddy.network.dtos.DashboardDto
 import com.andrewkingmarshall.beachbuddy.network.dtos.RequestedItemDto
 import com.andrewkingmarshall.beachbuddy.network.interceptors.ErrorInterceptor
 import com.andrewkingmarshall.beachbuddy.network.interceptors.SecretHeaderInterceptor
@@ -47,13 +48,16 @@ class ApiService(var context: Context) {
         apiServiceEndpointInterface = retrofit.create(ApiServiceEndpointInterface::class.java)
     }
 
-    fun getNotCompletedRequestedItems() : Response<List<RequestedItemDto>> {
+    fun getNotCompletedRequestedItems(): Response<List<RequestedItemDto>> {
         val call = apiServiceEndpointInterface.getNonCompletedRequestedItems()
 
         return call.execute()
     }
 
-    fun updateRequestedItem(requestedItemId: String, request: UpdateRequestedItemRequest) : Response<RequestedItemDto> {
+    fun updateRequestedItem(
+        requestedItemId: String,
+        request: UpdateRequestedItemRequest
+    ): Response<RequestedItemDto> {
         val call = apiServiceEndpointInterface.updateRequestedItem(requestedItemId, request)
 
         return call.execute()
@@ -63,5 +67,11 @@ class ApiService(var context: Context) {
         val call = apiServiceEndpointInterface.addDevice(addDeviceRequest)
 
         call.enqueue(callback)
+    }
+
+    fun getDashboard(lat : Double, lon : Double): Response<DashboardDto> {
+        val call = apiServiceEndpointInterface.getDashboard(lat, lon)
+
+        return call.execute()
     }
 }

@@ -18,7 +18,7 @@ class LeaderBoardItemView : ConstraintLayout {
     init {
         View.inflate(context, R.layout.compound_view_leader_board_item, this)
 
-        setBackgroundResource(R.drawable.transparent_white_ripple_square)
+        setBackgroundResource(R.drawable.transparent_gray_ripple_square)
     }
 
     private fun resetView() {

@@ -5,7 +5,7 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-class User(
+open class User(
 
     @PrimaryKey
     var id: String = "",
@@ -22,9 +22,11 @@ class User(
 
     var photoUrl: String = "",
 
+    var totalScore: Int = 0,
+
     var scores: RealmList<Score> = RealmList()
 
-    ) : RealmObject() {
+) : RealmObject() {
 
     constructor(userDto: UserDto) : this() {
         id = userDto.id
@@ -36,6 +38,7 @@ class User(
         photoUrl = userDto.photoUrl
 
         for (scoreDto in userDto.scores) {
+            totalScore += scoreDto.winCount
             scores.add(Score(scoreDto))
         }
     }

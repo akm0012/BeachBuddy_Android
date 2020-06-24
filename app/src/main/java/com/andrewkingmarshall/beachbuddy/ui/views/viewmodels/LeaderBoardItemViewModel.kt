@@ -7,7 +7,7 @@ import com.andrewkingmarshall.beachbuddy.database.realmObjects.User
 import com.andrewkingmarshall.beachbuddy.inject.Injector
 import javax.inject.Inject
 
-class LeaderBoardItemViewModel(var user : User) {
+class LeaderBoardItemViewModel(var user: User) {
 
     @Inject
     lateinit var context: Context
@@ -16,9 +16,9 @@ class LeaderBoardItemViewModel(var user : User) {
         Injector.obtain().inject(this)
     }
 
-    fun getName() : String = user.firstName
+    fun getName(): String = user.firstName
 
-    fun getSubtitle() : String {
+    fun getSubtitle(): String {
 
         var highScore = Score()
 
@@ -28,10 +28,15 @@ class LeaderBoardItemViewModel(var user : User) {
             }
         }
 
-        return "Best Game: ${highScore.name} (${highScore.winCount})"
+        val highScoreGame = when (highScore.winCount) {
+            0 -> return "No wins yet..."
+            else -> highScore.name
+        }
+
+        return "Best Game: $highScoreGame (${highScore.winCount})"
     }
 
-    fun getScore() : String {
+    fun getScore(): String {
 
         var totalWinCount = 0
 

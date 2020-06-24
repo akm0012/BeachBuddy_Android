@@ -33,7 +33,7 @@ class RequestedItemsFragment : Fragment() {
     private var requestedItems: List<RequestedItem> = ArrayList()
     private var completedItems: List<RequestedItem> = ArrayList()
 
-    var adapter = RequestedItemFlexibleAdapter(
+    private var adapter = RequestedItemFlexibleAdapter(
         null,
         object : RequestedItemFlexibleAdapter.InteractionListener {
             override fun onRequestedItemChecked(requestedItem: RequestedItem) {

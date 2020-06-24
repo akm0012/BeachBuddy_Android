@@ -20,7 +20,7 @@
         app:layout_constraintStart_toEndOf="@id/profileImageView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Andrew" />
+        tools:text="@tools:sample/first_names" />
 
     <TextView
         android:id="@+id/totalScoreTextView"
@@ -49,8 +49,8 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileImageView"
         android:layout_width="@dimen/profile_circle_size"
-        android:layout_height="@dimen/profile_circle_size"
         android:layout_marginStart="@dimen/standard_padding"
+        android:layout_height="@dimen/profile_circle_size"
         android:layout_marginEnd="@dimen/standard_padding"
         android:src="@color/light_gray"
         app:layout_constraintBottom_toBottomOf="parent"

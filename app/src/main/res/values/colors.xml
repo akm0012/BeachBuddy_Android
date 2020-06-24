@@ -55,4 +55,7 @@
     <color name="black_70_percent_opacity">#B2000000</color>
     <color name="black_80_percent_opacity">#CC000000</color>
     <color name="black">#000000</color>
+
+    <color name="light_gray_50_percent_opacity">#80979797</color>
+
 </resources>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:background="@color/light_gray"
+    tools:parentTag="android.widget.FrameLayout">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardBackgroundColor="@color/white">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/standard_padding"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:paddingStart="@dimen/standard_padding"
+                android:layout_height="wrap_content"
+                android:text="@string/leaderboard"
+                android:textColor="@color/dashboard_text_dark"
+                android:textSize="@dimen/dashboard_large_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/settingImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/standard_padding"
+                android:background="@drawable/transparent_gray_ripple_button"
+                android:padding="10dp"
+                android:src="@drawable/ic_settings_24dp"
+                android:tint="@color/dashboard_text_dark"
+                app:layout_constraintBottom_toBottomOf="@id/titleTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/titleTextView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/leaderBoardRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleTextView"
+                tools:listitem="@layout/container_leader_board_item_view" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</merge>

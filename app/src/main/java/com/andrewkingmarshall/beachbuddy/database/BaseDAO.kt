@@ -2,6 +2,7 @@ package com.andrewkingmarshall.beachbuddy.database
 
 import android.app.Application
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
+import com.andrewkingmarshall.beachbuddy.database.realmObjects.User
 import io.realm.*
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
@@ -39,14 +40,24 @@ fun clearRealm() {
     Timber.d("Realm cleared.")
 }
 
-fun findAllRequestedNotCompletedItems(realm: Realm) : LiveRealmData<RequestedItem> {
-    return LiveRealmData(realm.where(RequestedItem::class.java)
-        .sort("createdAtTime", Sort.DESCENDING)
-        .equalTo("isComplete", false)
-        .findAllAsync())
+fun findAllUsersForLeaderBoard(realm: Realm): LiveRealmData<User> {
+    return LiveRealmData(
+        realm.where(User::class.java)
+            .sort("totalScore", Sort.DESCENDING, "firstName", Sort.ASCENDING)
+            .findAllAsync()
+    )
 }
 
-fun findAllCompetedTodayRequestedItems(realm: Realm) : LiveRealmData<RequestedItem> {
+fun findAllRequestedNotCompletedItems(realm: Realm): LiveRealmData<RequestedItem> {
+    return LiveRealmData(
+        realm.where(RequestedItem::class.java)
+            .sort("createdAtTime", Sort.DESCENDING)
+            .equalTo("isComplete", false)
+            .findAllAsync()
+    )
+}
+
+fun findAllCompetedTodayRequestedItems(realm: Realm): LiveRealmData<RequestedItem> {
 
     val tomorrowStartOfDay =
         DateTime(DateTime.now(DateTimeZone.getDefault())).plusDays(1)
@@ -55,18 +66,21 @@ fun findAllCompetedTodayRequestedItems(realm: Realm) : LiveRealmData<RequestedIt
         DateTime(DateTime.now(DateTimeZone.getDefault()))
             .withTimeAtStartOfDay().millis
 
-    return LiveRealmData(realm.where(RequestedItem::class.java)
-        .lessThan("completedAtTime", tomorrowStartOfDay)
-        .greaterThanOrEqualTo("completedAtTime", todayStartOfDay)
-        .equalTo("isComplete", true)
-        .sort("completedAtTime", Sort.DESCENDING)
-        .findAllAsync())
+    return LiveRealmData(
+        realm.where(RequestedItem::class.java)
+            .lessThan("completedAtTime", tomorrowStartOfDay)
+            .greaterThanOrEqualTo("completedAtTime", todayStartOfDay)
+            .equalTo("isComplete", true)
+            .sort("completedAtTime", Sort.DESCENDING)
+            .findAllAsync()
+    )
 }
 
 fun markRequestedItemAsComplete(requestedItemId: String) {
     val realm = Realm.getDefaultInstance()
     realm.executeTransaction {
-        val itemToUpdate = it.where(RequestedItem::class.java).equalTo("id", requestedItemId).findFirst()
+        val itemToUpdate =
+            it.where(RequestedItem::class.java).equalTo("id", requestedItemId).findFirst()
         if (itemToUpdate != null) {
             itemToUpdate.isComplete = true
             itemToUpdate.completedAtTime = DateTime.now().millis
@@ -78,7 +92,8 @@ fun markRequestedItemAsComplete(requestedItemId: String) {
 fun markRequestedItemAsNotCompleted(requestedItemId: String) {
     val realm = Realm.getDefaultInstance()
     realm.executeTransaction {
-        val itemToUpdate = it.where(RequestedItem::class.java).equalTo("id", requestedItemId).findFirst()
+        val itemToUpdate =
+            it.where(RequestedItem::class.java).equalTo("id", requestedItemId).findFirst()
         if (itemToUpdate != null) {
             itemToUpdate.isComplete = false
             itemToUpdate.completedAtTime = null

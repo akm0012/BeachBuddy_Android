@@ -10,6 +10,8 @@ class LeaderBoardFlexibleAdapter : FlexibleAdapter<IFlexible<*>> {
         private set
 
     interface InteractionListener {
+        fun onSettingsClicked()
+
         fun onLeaderBoardItemClicked(user: User)
     }
 
