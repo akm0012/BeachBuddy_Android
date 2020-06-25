@@ -66,7 +66,7 @@ class LeaderBoardView : FrameLayout {
             if (leaderBoardRecyclerView.itemDecorationCount == 0) {
                 leaderBoardRecyclerView.addItemDecoration(
                     VerticalSpaceItemDecoration(
-                        resources.getDimension(R.dimen.leader_board_item_space).toInt()
+                        resources.getDimension(R.dimen.leader_board_item_space).toInt(), true
                     )
                 )
             }
