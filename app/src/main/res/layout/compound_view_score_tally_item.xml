@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <Button
+        android:id="@+id/decrementButton"
+        android:layout_width="@dimen/score_tally_button_width"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standard_padding"
+        android:text="–"
+        android:textSize="@dimen/dashboard_large_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/gameNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLength="20"
+        android:maxLines="1"
+        android:paddingEnd="5dp"
+        android:paddingStart="10dp"
+        android:textColor="@color/dashboard_text_dark"
+        android:textSize="@dimen/dashboard_normal_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/scoreTextView"
+        app:layout_constraintStart_toEndOf="@id/decrementButton"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Mario Party" />
+
+    <TextView
+        android:id="@+id/scoreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="10dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/dashboard_large_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/incrementButton"
+        app:layout_constraintStart_toEndOf="@id/gameNameTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="5" />
+
+    <Button
+        android:id="@+id/incrementButton"
+        android:layout_width="@dimen/score_tally_button_width"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standard_padding"
+        android:layout_marginEnd="@dimen/standard_padding"
+        android:text="+"
+        android:textSize="@dimen/dashboard_large_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</merge>
