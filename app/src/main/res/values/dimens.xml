@@ -12,5 +12,6 @@
     <dimen name="circle_radius">50dp</dimen>
 
     <dimen name="leader_board_item_space">5dp</dimen>
+    <dimen name="score_tally_button_width">45dp</dimen>
 
 </resources>
