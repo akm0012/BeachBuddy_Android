@@ -17,6 +17,8 @@ import eu.davidea.flexibleadapter.items.IFlexible
 import kotlinx.android.synthetic.main.compound_view_leader_board_item.view.nameTextView
 import kotlinx.android.synthetic.main.compound_view_leader_board_item.view.profileImageView
 import kotlinx.android.synthetic.main.compound_view_manage_user_scores_item.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ManageUserScoresView : ConstraintLayout {
 
@@ -55,7 +57,9 @@ class ManageUserScoresView : ConstraintLayout {
 
         val flexibleItemList = ArrayList<IFlexible<*>>()
 
-        for (score in user.scores) {
+        val sortedScores = user.scores.sortedBy { score -> score.name }
+
+        for (score in sortedScores) {
             flexibleItemList.add(ScoreTallyViewFlexibleItem(score))
         }
 

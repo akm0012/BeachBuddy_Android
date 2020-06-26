@@ -7,6 +7,7 @@ import com.andrewkingmarshall.beachbuddy.network.service.ApiService
 import com.andrewkingmarshall.beachbuddy.repository.DashboardRepository
 import com.andrewkingmarshall.beachbuddy.repository.FirebaseRepository
 import com.andrewkingmarshall.beachbuddy.repository.RequestedItemRepository
+import com.andrewkingmarshall.beachbuddy.repository.ScoreRepository
 import com.birbit.android.jobqueue.Job
 import com.birbit.android.jobqueue.JobManager
 import com.birbit.android.jobqueue.config.Configuration
@@ -47,6 +48,12 @@ class ApplicationModule(
     @Singleton
     fun provideFirebaseRepository(): FirebaseRepository {
         return FirebaseRepository()
+    }
+
+    @Provides
+    @Singleton
+    fun provideScoreRepository(): ScoreRepository {
+        return ScoreRepository()
     }
 
     @Provides

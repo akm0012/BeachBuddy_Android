@@ -68,11 +68,11 @@ class ScoreManagementFragment : Fragment() {
                 flexibleItemList,
                 object : ManageScoreFlexibleAdapter.InteractionListener {
                     override fun onScoreIncremented(score: Score) {
-                        score.name.toast(requireContext())
+                        viewModel.onScoreIncremented(score)
                     }
 
                     override fun onScoreDecremented(score: Score) {
-                        score.name.toast(requireContext())
+                        viewModel.onScoreDecremented(score)
                     }
                 },
                 true

@@ -2,6 +2,7 @@ package com.andrewkingmarshall.beachbuddy.database
 
 import android.app.Application
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
+import com.andrewkingmarshall.beachbuddy.database.realmObjects.Score
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.User
 import io.realm.*
 import org.joda.time.DateTime
@@ -74,6 +75,18 @@ fun findAllCompetedTodayRequestedItems(realm: Realm): LiveRealmData<RequestedIte
             .sort("completedAtTime", Sort.DESCENDING)
             .findAllAsync()
     )
+}
+
+fun updateScore(scoreId: String, newScore: Int) {
+    val realm = Realm.getDefaultInstance()
+    realm.executeTransaction {
+        val scoreToUpdate =
+            it.where(Score::class.java).equalTo("id", scoreId).findFirst()
+        if (scoreToUpdate != null) {
+            scoreToUpdate.winCount = newScore
+        }
+    }
+    realm.close()
 }
 
 fun markRequestedItemAsComplete(requestedItemId: String) {

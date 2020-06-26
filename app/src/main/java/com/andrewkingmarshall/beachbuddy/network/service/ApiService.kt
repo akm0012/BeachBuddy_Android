@@ -9,6 +9,7 @@ import com.andrewkingmarshall.beachbuddy.network.interceptors.ErrorInterceptor
 import com.andrewkingmarshall.beachbuddy.network.interceptors.SecretHeaderInterceptor
 import com.andrewkingmarshall.beachbuddy.network.requests.AddDeviceRequest
 import com.andrewkingmarshall.beachbuddy.network.requests.UpdateRequestedItemRequest
+import com.andrewkingmarshall.beachbuddy.network.requests.UpdateScoreRequest
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -71,6 +72,15 @@ class ApiService(var context: Context) {
 
     fun getDashboard(lat : Double, lon : Double): Response<DashboardDto> {
         val call = apiServiceEndpointInterface.getDashboard(lat, lon)
+
+        return call.execute()
+    }
+
+    fun updateScore(
+        scoreId: String,
+        request: UpdateScoreRequest
+    ): Response<Void> {
+        val call = apiServiceEndpointInterface.updateScore(scoreId, request)
 
         return call.execute()
     }
