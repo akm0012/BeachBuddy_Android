@@ -14,4 +14,6 @@
     <dimen name="leader_board_item_space">5dp</dimen>
     <dimen name="score_tally_button_width">45dp</dimen>
 
+    <dimen name="grid_item_offset">20dp</dimen>
+
 </resources>

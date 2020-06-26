@@ -13,10 +13,22 @@
         <action
             android:id="@+id/action_dashboardFragment_to_requestedItemsFragment"
             app:destination="@id/requestedItemsFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_scoreManagementFragment"
+            app:destination="@id/scoreManagementFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/requestedItemsFragment"
         android:name="com.andrewkingmarshall.beachbuddy.ui.fragments.RequestedItemsFragment"
         android:label="fragment_requested_items"
         tools:layout="@layout/fragment_requested_items" />
+    <fragment
+        android:id="@+id/scoreManagementFragment"
+        android:name="com.andrewkingmarshall.beachbuddy.ui.fragments.ScoreManagementFragment"
+        android:label="fragment_score_management"
+        tools:layout="@layout/fragment_score_management" />
 </navigation>
