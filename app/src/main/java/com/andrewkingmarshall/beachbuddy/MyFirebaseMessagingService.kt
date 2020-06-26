@@ -57,13 +57,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             // Refresh the Requested Item data
             handleNow()
 
-            // Todo Play Seagull noise (Using Event Bus so it will only work when app is up.)
-
             remoteMessage.data["updateOnly"]?.let {
                 Timber.d("updateOnly: $it")
 
                 // Play a Seagull noise
                 if (it == "false") {
+                    // Play the Seagull sound
                     val mPlayer: MediaPlayer = MediaPlayer.create(applicationContext, R.raw.seagulls)
                     mPlayer.start()
                 }

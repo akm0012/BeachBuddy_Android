@@ -22,4 +22,11 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
+    <com.andrewkingmarshall.beachbuddy.ui.views.ManageUserScoresView
+        android:id="@+id/testManageUserScoresView"
+        app:layout_constraintStart_toEndOf="@id/leaderBoardView"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

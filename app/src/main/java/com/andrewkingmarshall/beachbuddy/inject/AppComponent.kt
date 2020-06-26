@@ -13,6 +13,7 @@ import com.andrewkingmarshall.beachbuddy.ui.views.viewmodels.RequestedItemViewMo
 import com.andrewkingmarshall.beachbuddy.viewmodels.DashboardAndroidViewModel
 import com.andrewkingmarshall.beachbuddy.viewmodels.MainActivityAndroidViewModel
 import com.andrewkingmarshall.beachbuddy.viewmodels.RequestedItemAndroidViewModel
+import com.andrewkingmarshall.beachbuddy.viewmodels.ScoreManagementAndroidViewModel
 import dagger.Component
 import javax.inject.Singleton
 
@@ -30,6 +31,7 @@ interface AppComponent {
     fun inject(androidViewModel: RequestedItemAndroidViewModel)
     fun inject(androidViewModel: MainActivityAndroidViewModel)
     fun inject(androidViewModel: DashboardAndroidViewModel)
+    fun inject(androidViewModel: ScoreManagementAndroidViewModel)
 
     fun inject(repository: RequestedItemRepository)
     fun inject(repository: FirebaseRepository)

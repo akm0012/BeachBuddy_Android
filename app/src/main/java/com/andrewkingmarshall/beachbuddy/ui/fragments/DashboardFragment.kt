@@ -7,11 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 
 import com.andrewkingmarshall.beachbuddy.R
+import com.andrewkingmarshall.beachbuddy.database.realmObjects.Score
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.User
 import com.andrewkingmarshall.beachbuddy.extensions.toast
 import com.andrewkingmarshall.beachbuddy.ui.views.LeaderBoardView
+import com.andrewkingmarshall.beachbuddy.ui.views.ManageUserScoresView
 import com.andrewkingmarshall.beachbuddy.viewmodels.DashboardAndroidViewModel
 import com.andrewkingmarshall.beachbuddy.viewmodels.RequestedItemAndroidViewModel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
@@ -19,6 +23,8 @@ import kotlinx.android.synthetic.main.fragment_dashboard.*
 class DashboardFragment : Fragment() {
 
     lateinit var viewModel: DashboardAndroidViewModel
+
+    lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +44,8 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        navController = Navigation.findNavController(view)
+
         setUpLeaderboard()
 
         viewModel.showToast.observe(viewLifecycleOwner, Observer { it.toast(requireContext()) })
@@ -47,11 +55,22 @@ class DashboardFragment : Fragment() {
         viewModel.getUsers().observe(viewLifecycleOwner, Observer {
             leaderBoardView.setUsers(it, object : LeaderBoardView.InteractionListener {
                 override fun onSettingsClicked() {
-                    "settings clicked".toast(requireContext())
+                    navController.navigate(R.id.action_dashboardFragment_to_scoreManagementFragment)
                 }
 
                 override fun onUserClicked(user: User) {
                     "${user.firstName} clicked".toast(requireContext())
+
+                    testManageUserScoresView.setUser(user, object : ManageUserScoresView.InteractionListener {
+                        override fun onScoreIncremented(score: Score) {
+                            score.toast(requireContext())
+                        }
+
+                        override fun onScoreDecremented(score: Score) {
+                            score.toast(requireContext())
+
+                        }
+                    })
                 }
             })
         })
