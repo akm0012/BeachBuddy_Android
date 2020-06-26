@@ -1,6 +1,7 @@
 package com.andrewkingmarshall.beachbuddy.ui.fragments
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.setActionButtonEnabled
+import com.afollestad.materialdialogs.input.getInputField
+import com.afollestad.materialdialogs.input.input
 import com.andrewkingmarshall.beachbuddy.R
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.Score
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.User
@@ -49,10 +55,27 @@ class ScoreManagementFragment : Fragment() {
         viewModel.getUsers().observe(viewLifecycleOwner, Observer { setScoreBoard(it) })
 
         addGameButton.setOnClickListener {
-            "Show dialog".toast(requireContext())
+            MaterialDialog(requireContext()).show {
+                input(
+                    hint = "Game Name",
+                    waitForPositiveButton = true,
+                    maxLength = 15,
+                    inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
+                ) { dialog, text ->
+                    val inputField = dialog.getInputField()
+                    val isValid = text.isNotEmpty() && text.length < 15
+
+                    inputField.error = if (isValid) null else "Invalid"
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
+
+                    viewModel.onAddNewGame(inputField.text.toString())
+                }
+
+                title(text = "Add a New Game")
+                positiveButton(text = "Add Game")
+                negativeButton(text = "Cancel")
+            }
         }
-
-
     }
 
     private fun setScoreBoard(users: List<User>) {
