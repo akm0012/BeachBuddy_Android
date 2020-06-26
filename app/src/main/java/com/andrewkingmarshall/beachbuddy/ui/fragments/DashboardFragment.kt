@@ -59,18 +59,7 @@ class DashboardFragment : Fragment() {
                 }
 
                 override fun onUserClicked(user: User) {
-                    "${user.firstName} clicked".toast(requireContext())
-
-                    testManageUserScoresView.setUser(user, object : ManageUserScoresView.InteractionListener {
-                        override fun onScoreIncremented(score: Score) {
-                            score.toast(requireContext())
-                        }
-
-                        override fun onScoreDecremented(score: Score) {
-                            score.toast(requireContext())
-
-                        }
-                    })
+                    navController.navigate(R.id.action_dashboardFragment_to_scoreManagementFragment)
                 }
             })
         })
