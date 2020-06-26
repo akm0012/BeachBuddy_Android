@@ -3,6 +3,7 @@ package com.andrewkingmarshall.beachbuddy.network.service
 import com.andrewkingmarshall.beachbuddy.network.dtos.DashboardDto
 import com.andrewkingmarshall.beachbuddy.network.dtos.RequestedItemDto
 import com.andrewkingmarshall.beachbuddy.network.requests.AddDeviceRequest
+import com.andrewkingmarshall.beachbuddy.network.requests.AddGameRequest
 import com.andrewkingmarshall.beachbuddy.network.requests.UpdateRequestedItemRequest
 import com.andrewkingmarshall.beachbuddy.network.requests.UpdateScoreRequest
 import retrofit2.Call
@@ -30,5 +31,10 @@ interface ApiServiceEndpointInterface {
     fun updateScore(
         @Path("scoreId") scoreId: String,
         @Body updateScoreRequest: UpdateScoreRequest
+    ): Call<Void>
+
+    @POST("api/addScore")
+    fun addGame(
+        @Body addGameRequest: AddGameRequest
     ): Call<Void>
 }

@@ -93,7 +93,5 @@ class ManageUserScoresView : ConstraintLayout {
         } else {
             adapter?.updateDataSet(flexibleItemList, true)
         }
-
     }
-
 }

@@ -32,7 +32,7 @@ class DashboardRepository {
         return Transformations.map(findAllUsersForLeaderBoard(realm)) { realm.copyFromRealm(it) }
     }
 
-    private fun refreshDashBoard() {
+    fun refreshDashBoard() {
         jobManager.addJobInBackground(GetDashboardJob())
     }
 

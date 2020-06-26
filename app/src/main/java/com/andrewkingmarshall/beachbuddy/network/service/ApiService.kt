@@ -8,6 +8,7 @@ import com.andrewkingmarshall.beachbuddy.network.dtos.RequestedItemDto
 import com.andrewkingmarshall.beachbuddy.network.interceptors.ErrorInterceptor
 import com.andrewkingmarshall.beachbuddy.network.interceptors.SecretHeaderInterceptor
 import com.andrewkingmarshall.beachbuddy.network.requests.AddDeviceRequest
+import com.andrewkingmarshall.beachbuddy.network.requests.AddGameRequest
 import com.andrewkingmarshall.beachbuddy.network.requests.UpdateRequestedItemRequest
 import com.andrewkingmarshall.beachbuddy.network.requests.UpdateScoreRequest
 import okhttp3.OkHttpClient
@@ -83,5 +84,14 @@ class ApiService(var context: Context) {
         val call = apiServiceEndpointInterface.updateScore(scoreId, request)
 
         return call.execute()
+    }
+
+    fun addGame(
+        request: AddGameRequest,
+        callback: Callback<Void>
+    ) {
+        val call = apiServiceEndpointInterface.addGame(request)
+
+        call.enqueue(callback)
     }
 }

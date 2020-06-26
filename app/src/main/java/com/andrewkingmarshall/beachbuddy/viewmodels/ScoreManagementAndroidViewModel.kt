@@ -8,6 +8,7 @@ import com.andrewkingmarshall.beachbuddy.database.realmObjects.User
 import com.andrewkingmarshall.beachbuddy.eventbus.GetDashboardEvent
 import com.andrewkingmarshall.beachbuddy.eventbus.PostUpdateScoreEvent
 import com.andrewkingmarshall.beachbuddy.inject.Injector
+import com.andrewkingmarshall.beachbuddy.network.NetworkCallStatusListener
 import com.andrewkingmarshall.beachbuddy.repository.DashboardRepository
 import com.andrewkingmarshall.beachbuddy.repository.ScoreRepository
 import io.realm.Realm
@@ -37,6 +38,15 @@ class ScoreManagementAndroidViewModel(application: Application) : AndroidViewMod
 
     fun getUsers(): LiveData<List<User>> {
         return dashboardRepository.getUsers(realm)
+    }
+
+    fun onAddNewGame(gameName: String) {
+        scoreRepository.addGame(gameName, object : NetworkCallStatusListener<Void>() {
+
+            override fun onErrorOccurred(error: Throwable?) {
+                showToast.value = error?.localizedMessage
+            }
+        })
     }
 
     fun onScoreIncremented(score: Score) {
