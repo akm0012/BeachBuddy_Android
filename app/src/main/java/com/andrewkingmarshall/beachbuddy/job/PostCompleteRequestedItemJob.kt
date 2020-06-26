@@ -1,21 +1,16 @@
 package com.andrewkingmarshall.beachbuddy.job
 
-import com.andrewkingmarshall.beachbuddy.database.markRequestedItemAsComplete
 import com.andrewkingmarshall.beachbuddy.database.markRequestedItemAsNotCompleted
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
-import com.andrewkingmarshall.beachbuddy.eventbus.GetRequestedItemEvent
 import com.andrewkingmarshall.beachbuddy.eventbus.PostUpdateRequestedItemEvent
 import com.andrewkingmarshall.beachbuddy.extensions.save
 import com.andrewkingmarshall.beachbuddy.inject.AppComponent
 import com.andrewkingmarshall.beachbuddy.network.requests.UpdateRequestedItemRequest
 import com.andrewkingmarshall.beachbuddy.network.service.ApiService
-import com.birbit.android.jobqueue.CancelReason
 import com.birbit.android.jobqueue.Params
 import com.birbit.android.jobqueue.RetryConstraint
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
-import java.lang.Exception
-import java.lang.IllegalStateException
 import javax.inject.Inject
 
 class PostCompleteRequestedItemJob(
