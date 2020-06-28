@@ -46,9 +46,21 @@ class DashboardFragment : Fragment() {
 
         navController = Navigation.findNavController(view)
 
+        setUpCurrentWeather()
+
         setUpLeaderboard()
 
         viewModel.showToast.observe(viewLifecycleOwner, Observer { it.toast(requireContext()) })
+    }
+
+    private fun setUpCurrentWeather() {
+        viewModel.getCurrentWeather().observe(viewLifecycleOwner, Observer {
+            if (it == null) {
+                return@Observer
+            }
+
+            currentWeatherView.setWeather(it)
+        })
     }
 
     private fun setUpLeaderboard() {

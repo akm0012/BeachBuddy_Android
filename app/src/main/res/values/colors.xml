@@ -58,4 +58,11 @@
 
     <color name="light_gray_50_percent_opacity">#80979797</color>
 
+    <!--  Flag Colors  -->
+    <color name="flag_green">#159133</color>
+    <color name="flag_yellow">#FCF119</color>
+    <color name="flag_red">#DF2F08</color>
+    <color name="flag_purple">#633396</color>
+
+
 </resources>

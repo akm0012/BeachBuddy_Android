@@ -7,19 +7,25 @@
     android:background="@color/off_white"
     tools:context=".ui.fragments.DashboardFragment">
 
+    <com.andrewkingmarshall.beachbuddy.ui.views.CurrentWeatherView
+        android:id="@+id/currentWeatherView"
+        android:layout_width="wrap_content"
+        android:layout_height="180dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.andrewkingmarshall.beachbuddy.ui.views.SunsetTimerView
         android:id="@+id/sunsetTimerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/currentWeatherView"
+        app:layout_constraintTop_toTopOf="@id/currentWeatherView" />
 
     <com.andrewkingmarshall.beachbuddy.ui.views.LeaderBoardView
         android:id="@+id/leaderBoardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

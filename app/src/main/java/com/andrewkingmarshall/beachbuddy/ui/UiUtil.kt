@@ -2,6 +2,7 @@ package com.andrewkingmarshall.beachbuddy.ui
 
 import android.app.Activity
 import android.content.Context
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.andrewkingmarshall.beachbuddy.AppSecretHeader
 import com.andrewkingmarshall.beachbuddy.R
@@ -65,4 +66,23 @@ fun loadCircleProfilePhoto(
         .error(R.color.cancel_gray)
         .placeholder(R.color.cancel_gray)
         .into(circleImageView)
+}
+
+fun loadImage(
+    context: Context,
+    imageUrl: String?,
+    imageView: ImageView
+) {
+
+    if (context is Activity) {
+        if (context.isFinishing || context.isDestroyed) {
+            Timber.w("loadThumbnail skipped as Context was Activity and Activity was not in a usablez state")
+            return
+        }
+    }
+
+    Glide.with(context).load(imageUrl)
+        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        .error(R.color.cancel_gray)
+        .into(imageView)
 }

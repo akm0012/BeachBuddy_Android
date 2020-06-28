@@ -10,6 +10,7 @@ import com.andrewkingmarshall.beachbuddy.repository.FirebaseRepository
 import com.andrewkingmarshall.beachbuddy.repository.RequestedItemRepository
 import com.andrewkingmarshall.beachbuddy.repository.ScoreRepository
 import com.andrewkingmarshall.beachbuddy.ui.fragments.RequestedItemsFragment
+import com.andrewkingmarshall.beachbuddy.ui.views.viewmodels.CurrentWeatherViewModel
 import com.andrewkingmarshall.beachbuddy.ui.views.viewmodels.LeaderBoardItemViewModel
 import com.andrewkingmarshall.beachbuddy.ui.views.viewmodels.RequestedItemViewModel
 import com.andrewkingmarshall.beachbuddy.viewmodels.DashboardAndroidViewModel
@@ -30,6 +31,7 @@ interface AppComponent {
 
     fun inject(pokoViewModel: LeaderBoardItemViewModel)
     fun inject(pokoViewModel: RequestedItemViewModel)
+    fun inject(pokoViewModel: CurrentWeatherViewModel)
 
     fun inject(androidViewModel: RequestedItemAndroidViewModel)
     fun inject(androidViewModel: MainActivityAndroidViewModel)

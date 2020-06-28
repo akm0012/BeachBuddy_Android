@@ -1,5 +1,6 @@
 package com.andrewkingmarshall.beachbuddy.job
 
+import com.andrewkingmarshall.beachbuddy.database.realmObjects.CurrentWeather
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.User
 import com.andrewkingmarshall.beachbuddy.eventbus.GetDashboardEvent
 import com.andrewkingmarshall.beachbuddy.extensions.save
@@ -32,11 +33,11 @@ class GetDashboardJob : BaseJob(
     override fun onRun() {
         Timber.i("Running job...")
 
-        val dashboardDto =
-            apiService.getDashboard(lat = 27.267804, lon = -82.553679).body() ?: DashboardDto()
+        val dashboardDto = apiService.getDashboard(lat = 27.267804, lon = -82.553679).body()
+            ?: return
 
+        // Users
         val usersToSave = ArrayList<User>()
-
         for (userDto in dashboardDto.users) {
             try {
                 usersToSave.add(User(userDto))
@@ -46,9 +47,17 @@ class GetDashboardJob : BaseJob(
             }
         }
 
-        EventBus.getDefault().post(GetDashboardEvent(true))
+        // Current Weather Info
+        try {
+            val currentWeather = CurrentWeather(dashboardDto.weatherDto, dashboardDto.beachConditions)
+            currentWeather.save()
+        } catch (e: Exception) {
+            Timber.w(e, "Unable to process item. Skipping it. $dashboardDto.weatherDto")
+        }
 
         usersToSave.save()
+
+        EventBus.getDefault().post(GetDashboardEvent(true))
     }
 
     override fun shouldReRunOnThrowable(

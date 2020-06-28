@@ -5,6 +5,8 @@ import androidx.lifecycle.Transformations
 import com.andrewkingmarshall.beachbuddy.database.findAllCompetedTodayRequestedItems
 import com.andrewkingmarshall.beachbuddy.database.findAllRequestedNotCompletedItems
 import com.andrewkingmarshall.beachbuddy.database.findAllUsersForLeaderBoard
+import com.andrewkingmarshall.beachbuddy.database.findCurrentWeather
+import com.andrewkingmarshall.beachbuddy.database.realmObjects.CurrentWeather
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.User
 import com.andrewkingmarshall.beachbuddy.inject.Injector
@@ -30,6 +32,18 @@ class DashboardRepository {
         refreshDashBoard()
 
         return Transformations.map(findAllUsersForLeaderBoard(realm)) { realm.copyFromRealm(it) }
+    }
+
+    fun getCurrentWeather(realm: Realm): LiveData<CurrentWeather?> {
+
+        // Note: Not refreshing Dashboard as of now
+        return Transformations.map(findCurrentWeather(realm)) {
+            if (it.isNotEmpty()) {
+                realm.copyFromRealm(it.first())
+            } else {
+                null
+            }
+        }
     }
 
     fun refreshDashBoard() {

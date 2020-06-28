@@ -3,6 +3,7 @@ package com.andrewkingmarshall.beachbuddy.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import com.andrewkingmarshall.beachbuddy.database.realmObjects.CurrentWeather
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.User
 import com.andrewkingmarshall.beachbuddy.eventbus.GetDashboardEvent
@@ -34,6 +35,10 @@ class DashboardAndroidViewModel(application: Application) : AndroidViewModel(app
 
     fun getUsers(): LiveData<List<User>> {
         return dashboardRepository.getUsers(realm)
+    }
+
+    fun getCurrentWeather(): LiveData<CurrentWeather?> {
+        return dashboardRepository.getCurrentWeather(realm)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

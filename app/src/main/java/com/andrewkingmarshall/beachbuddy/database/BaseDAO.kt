@@ -1,6 +1,7 @@
 package com.andrewkingmarshall.beachbuddy.database
 
 import android.app.Application
+import com.andrewkingmarshall.beachbuddy.database.realmObjects.CurrentWeather
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.Score
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.User
@@ -39,6 +40,13 @@ fun clearRealm() {
         }
     }
     Timber.d("Realm cleared.")
+}
+
+fun findCurrentWeather(realm: Realm): LiveRealmData<CurrentWeather> {
+    return LiveRealmData(
+        realm.where(CurrentWeather::class.java)
+            .findAllAsync()
+    )
 }
 
 fun findAllUsersForLeaderBoard(realm: Realm): LiveRealmData<User> {
