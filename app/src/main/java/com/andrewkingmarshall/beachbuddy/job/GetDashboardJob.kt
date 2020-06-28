@@ -1,6 +1,7 @@
 package com.andrewkingmarshall.beachbuddy.job
 
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.CurrentWeather
+import com.andrewkingmarshall.beachbuddy.database.realmObjects.HourlyWeatherInfo
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.SunsetInfo
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.User
 import com.andrewkingmarshall.beachbuddy.eventbus.GetDashboardEvent
@@ -13,6 +14,8 @@ import com.birbit.android.jobqueue.RetryConstraint
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import javax.inject.Inject
+
+const val NumOfHoursToSave = 24
 
 class GetDashboardJob : BaseJob(
     Params(UI_HIGH).requireNetwork()
@@ -54,8 +57,21 @@ class GetDashboardJob : BaseJob(
             val currentWeather = CurrentWeather(dashboardDto.weatherDto, dashboardDto.beachConditions)
             currentWeather.save()
         } catch (e: Exception) {
-            Timber.w(e, "Unable to process CurrentWeather. Skipping it. $dashboardDto.weatherDto")
+            Timber.w(e, "Unable to process CurrentWeather. Skipping it. ${dashboardDto.weatherDto}")
         }
+
+        val hourlyInfoToSave = ArrayList<HourlyWeatherInfo>()
+
+        // Hourly Weather
+        repeat(NumOfHoursToSave) {
+            try {
+                val hourlyWeatherInfo = HourlyWeatherInfo(it, dashboardDto.weatherDto.hourly[it])
+                hourlyInfoToSave.add(hourlyWeatherInfo)
+            } catch (e: Exception) {
+                Timber.w(e, "Unable to process Hourly Weather. Skipping Index $it")
+            }
+        }
+        hourlyInfoToSave.save()
 
         // Sunset Info
         try {

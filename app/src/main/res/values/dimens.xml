@@ -18,5 +18,10 @@
 
     <dimen name="dashboard_first_column_width">230dp</dimen>
 
+    <dimen name="weather_icon_size">75dp</dimen>
+
+    <dimen name="weather_item_width">100dp</dimen>
+    <dimen name="weather_item_height">200dp</dimen>
+
 
 </resources>

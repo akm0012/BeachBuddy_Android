@@ -42,8 +42,8 @@
 
             <ImageView
                 android:id="@+id/currentWeatherIconImageView"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
+                android:layout_width="@dimen/weather_icon_size"
+                android:layout_height="@dimen/weather_icon_size"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="@dimen/standard_padding"
                 app:layout_constraintBottom_toBottomOf="parent"

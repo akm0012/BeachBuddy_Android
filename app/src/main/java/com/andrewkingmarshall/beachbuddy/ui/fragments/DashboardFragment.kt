@@ -45,7 +45,9 @@ class DashboardFragment : Fragment() {
 
         setUpSunsetView()
 
-        setUpWeatherViews()
+        setUpCurrentWeatherAndBeachConditions()
+
+        setUpHourlyWeatherView()
 
         setUpLeaderboard()
 
@@ -67,7 +69,7 @@ class DashboardFragment : Fragment() {
         })
     }
 
-    private fun setUpWeatherViews() {
+    private fun setUpCurrentWeatherAndBeachConditions() {
         viewModel.getCurrentWeather().observe(viewLifecycleOwner, Observer {
             if (it == null) {
                 return@Observer
@@ -75,6 +77,13 @@ class DashboardFragment : Fragment() {
 
             currentWeatherView.setWeather(it)
             beachConditionsView.setWeather(it)
+        })
+    }
+
+    private fun setUpHourlyWeatherView() {
+        viewModel.getHourlyWeatherInfo().observe(viewLifecycleOwner, Observer {
+            hourlyWeatherView.setWeather(it)
+            dailyWeatherView.setWeather(it)
         })
     }
 

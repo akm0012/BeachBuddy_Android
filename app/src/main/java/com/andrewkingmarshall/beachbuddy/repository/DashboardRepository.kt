@@ -3,10 +3,7 @@ package com.andrewkingmarshall.beachbuddy.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.andrewkingmarshall.beachbuddy.database.*
-import com.andrewkingmarshall.beachbuddy.database.realmObjects.CurrentWeather
-import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
-import com.andrewkingmarshall.beachbuddy.database.realmObjects.SunsetInfo
-import com.andrewkingmarshall.beachbuddy.database.realmObjects.User
+import com.andrewkingmarshall.beachbuddy.database.realmObjects.*
 import com.andrewkingmarshall.beachbuddy.inject.Injector
 import com.andrewkingmarshall.beachbuddy.job.GetDashboardJob
 import com.andrewkingmarshall.beachbuddy.job.GetNotCompletedRequestedItemsJob
@@ -54,6 +51,12 @@ class DashboardRepository {
                 null
             }
         }
+    }
+
+    fun getHourlyWeatherInfo(realm: Realm): LiveData<List<HourlyWeatherInfo>> {
+
+        // Note: Not refreshing Dashboard as of now
+        return Transformations.map(findHourlyWeatherInfos(realm)) { realm.copyFromRealm(it) }
     }
 
     fun refreshDashBoard() {

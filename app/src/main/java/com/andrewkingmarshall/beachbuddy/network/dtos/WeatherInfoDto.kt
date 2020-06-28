@@ -6,6 +6,7 @@ data class WeatherInfoDto(
 
     var lon: Double,
 
-    var current: CurrentWeatherDto
+    var current: CurrentWeatherDto,
 
-    )
+    var hourly: List<HourlyWeatherDto>
+)

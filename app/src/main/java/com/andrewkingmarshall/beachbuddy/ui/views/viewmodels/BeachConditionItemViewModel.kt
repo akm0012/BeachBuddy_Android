@@ -69,7 +69,7 @@ class BeachConditionItemViewModel(
                 ?: "N/A"
 
             TIME_UPDATED -> {
-                DateTime(weatherInfo.beachConditions?.timeUpdated).toString("EE H:mm a")
+                DateTime(weatherInfo.beachConditions?.timeUpdated).toString("EE h:mm a")
             }
         }
     }

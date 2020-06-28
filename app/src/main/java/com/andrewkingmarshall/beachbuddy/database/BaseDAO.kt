@@ -39,6 +39,13 @@ fun clearRealm() {
     Timber.d("Realm cleared.")
 }
 
+fun findHourlyWeatherInfos(realm: Realm): LiveRealmData<HourlyWeatherInfo> {
+    return LiveRealmData(
+        realm.where(HourlyWeatherInfo::class.java)
+            .findAllAsync()
+    )
+}
+
 fun findCurrentSunsetInfo(realm: Realm): LiveRealmData<SunsetInfo> {
     return LiveRealmData(
         realm.where(SunsetInfo::class.java)
