@@ -27,6 +27,9 @@ data class CurrentWeatherDto(
     @SerializedName("wind_gust")
     var windGust: Double,
 
+    @SerializedName("wind_deg")
+    var windDeg: Int,
+
     var weather: List<WeatherSummeryDto>
 
 )

@@ -33,6 +33,8 @@ open class CurrentWeather(
 
     var windGust: Double = 0.0,
 
+    var windDeg: Int = 0,
+
     var mainDescription: String = "",
 
     var secondaryDescription: String = "",
@@ -59,6 +61,7 @@ open class CurrentWeather(
         cloudPercent = currentWeatherDto.clouds
         windSpeed = currentWeatherDto.windSpeed
         windGust = currentWeatherDto.windGust
+        windDeg = currentWeatherDto.windDeg
         mainDescription = currentWeatherDto.weather[0].main
         secondaryDescription = currentWeatherDto.weather[0].description
         iconTemplate = currentWeatherDto.weather[0].icon
