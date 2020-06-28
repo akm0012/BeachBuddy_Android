@@ -43,11 +43,28 @@ class DashboardFragment : Fragment() {
 
         navController = Navigation.findNavController(view)
 
+        setUpSunsetView()
+
         setUpWeatherViews()
 
         setUpLeaderboard()
 
         viewModel.showToast.observe(viewLifecycleOwner, Observer { it.toast(requireContext()) })
+    }
+
+    private fun setUpSunsetView() {
+        viewModel.getSunsetInfo().observe(viewLifecycleOwner, Observer {
+            if (it == null) {
+                return@Observer
+            }
+
+            sunsetTimerView.setSunsetSunriseTimes(
+                it.sunrise,
+                it.sunset,
+                it.sunriseNextDay,
+                it.sunsetPrevDay
+            )
+        })
     }
 
     private fun setUpWeatherViews() {
@@ -78,12 +95,6 @@ class DashboardFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        sunsetTimerView.setSunsetSunriseTimes(
-            1592735774000,
-            1592785675000,
-            1592735774000,
-            0
-        )
         sunsetTimerView.startTimer()
     }
 

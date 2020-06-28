@@ -26,13 +26,12 @@ class SunsetTimerViewModel(
 
     fun getTimerText(currentTime: Long): String {
 
-        val currentDateTime = DateTime(currentTime)
+        val currentDateTime = DateTime(currentTime).withZone(DateTimeZone.getDefault())
 
         return if (currentTime > sunset || currentTime < sunrise) {
             // We want to show the time until sunrise
             // Fixme: This is technically wrong as we are not using the sunrise time from the next day, but it's close enough
-            val sunriseDateTime = DateTime(sunrise).plusDays(1)
-            val period = Period(currentDateTime, sunriseDateTime)
+            val period = Period(currentDateTime, DateTime(sunriseNextDay))
             "${period.hours}h ${period.minutes}m"
         } else {
             // We want to show the time until sunset
@@ -45,8 +44,7 @@ class SunsetTimerViewModel(
     fun getSubtitleTime(currentTime: Long): String {
         return if (currentTime > sunset || currentTime < sunrise) {
             // We want to show the sun rise time
-            // Fixme: This is technically wrong as we are not using the sunrise time from the next day, but it's close enough
-            val sunriseDateTime = DateTime(sunrise).plusDays(1)
+            val sunriseDateTime = DateTime(sunriseNextDay)
 
             sunriseDateTime.withZone(DateTimeZone.getDefault()).toString("h:mm a")
         } else {

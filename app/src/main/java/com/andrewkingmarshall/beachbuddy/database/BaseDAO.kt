@@ -1,10 +1,7 @@
 package com.andrewkingmarshall.beachbuddy.database
 
 import android.app.Application
-import com.andrewkingmarshall.beachbuddy.database.realmObjects.CurrentWeather
-import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
-import com.andrewkingmarshall.beachbuddy.database.realmObjects.Score
-import com.andrewkingmarshall.beachbuddy.database.realmObjects.User
+import com.andrewkingmarshall.beachbuddy.database.realmObjects.*
 import io.realm.*
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
@@ -40,6 +37,13 @@ fun clearRealm() {
         }
     }
     Timber.d("Realm cleared.")
+}
+
+fun findCurrentSunsetInfo(realm: Realm): LiveRealmData<SunsetInfo> {
+    return LiveRealmData(
+        realm.where(SunsetInfo::class.java)
+            .findAllAsync()
+    )
 }
 
 fun findCurrentWeather(realm: Realm): LiveRealmData<CurrentWeather> {

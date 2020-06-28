@@ -1,6 +1,7 @@
 package com.andrewkingmarshall.beachbuddy.job
 
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.CurrentWeather
+import com.andrewkingmarshall.beachbuddy.database.realmObjects.SunsetInfo
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.User
 import com.andrewkingmarshall.beachbuddy.eventbus.GetDashboardEvent
 import com.andrewkingmarshall.beachbuddy.extensions.save
@@ -46,16 +47,23 @@ class GetDashboardJob : BaseJob(
                 continue
             }
         }
+        usersToSave.save()
 
         // Current Weather Info
         try {
             val currentWeather = CurrentWeather(dashboardDto.weatherDto, dashboardDto.beachConditions)
             currentWeather.save()
         } catch (e: Exception) {
-            Timber.w(e, "Unable to process item. Skipping it. $dashboardDto.weatherDto")
+            Timber.w(e, "Unable to process CurrentWeather. Skipping it. $dashboardDto.weatherDto")
         }
 
-        usersToSave.save()
+        // Sunset Info
+        try {
+            val sunsetInfo = SunsetInfo(dashboardDto.weatherDto)
+            sunsetInfo.save()
+        } catch (e: Exception) {
+            Timber.w(e, "Unable to process SunsetInfo. Skipping it. $dashboardDto.weatherDto")
+        }
 
         EventBus.getDefault().post(GetDashboardEvent(true))
     }

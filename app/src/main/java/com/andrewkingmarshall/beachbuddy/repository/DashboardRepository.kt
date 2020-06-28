@@ -2,12 +2,10 @@ package com.andrewkingmarshall.beachbuddy.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.andrewkingmarshall.beachbuddy.database.findAllCompetedTodayRequestedItems
-import com.andrewkingmarshall.beachbuddy.database.findAllRequestedNotCompletedItems
-import com.andrewkingmarshall.beachbuddy.database.findAllUsersForLeaderBoard
-import com.andrewkingmarshall.beachbuddy.database.findCurrentWeather
+import com.andrewkingmarshall.beachbuddy.database.*
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.CurrentWeather
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.RequestedItem
+import com.andrewkingmarshall.beachbuddy.database.realmObjects.SunsetInfo
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.User
 import com.andrewkingmarshall.beachbuddy.inject.Injector
 import com.andrewkingmarshall.beachbuddy.job.GetDashboardJob
@@ -32,6 +30,18 @@ class DashboardRepository {
         refreshDashBoard()
 
         return Transformations.map(findAllUsersForLeaderBoard(realm)) { realm.copyFromRealm(it) }
+    }
+
+    fun getSunsetInfo(realm: Realm): LiveData<SunsetInfo?> {
+
+        // Note: Not refreshing Dashboard as of now
+        return Transformations.map(findCurrentSunsetInfo(realm)) {
+            if (it.isNotEmpty()) {
+                realm.copyFromRealm(it.first())
+            } else {
+                null
+            }
+        }
     }
 
     fun getCurrentWeather(realm: Realm): LiveData<CurrentWeather?> {

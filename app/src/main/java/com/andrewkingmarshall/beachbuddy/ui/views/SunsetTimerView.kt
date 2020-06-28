@@ -8,6 +8,8 @@ import com.andrewkingmarshall.beachbuddy.R
 import com.andrewkingmarshall.beachbuddy.ui.views.viewmodels.SunsetTimerViewModel
 import com.badoo.mobile.util.WeakHandler
 import kotlinx.android.synthetic.main.compound_view_sunset_timer.view.*
+import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
 import java.util.*
 
 private const val TIMER_DELAY = 1000L
@@ -46,7 +48,8 @@ class SunsetTimerView : FrameLayout {
     }
 
     private fun updateTimer() {
-        val currentTime = System.currentTimeMillis()
+        val currentTime = DateTime().withZone(DateTimeZone.getDefault()).millis
+
         sunsetCountDownTextView.text = viewModel?.getTimerText(currentTime)
         sunsetTimeTextView.text = viewModel?.getSubtitleTime(currentTime)
         val progressInt = viewModel?.getProgressInt(currentTime) ?: 0
