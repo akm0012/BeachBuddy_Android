@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <ImageView
+        android:id="@+id/iconImageView"
+        android:layout_width="40dp"
+        android:layout_marginStart="@dimen/standard_padding"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_clouds_100"
+        android:tint="@color/dashboard_text_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:textColor="@color/dashboard_text"
+        android:textSize="@dimen/dashboard_small_text_size"
+        app:layout_constraintStart_toEndOf="@id/iconImageView"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintBottom_toTopOf="@id/contentTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Cloud Coverage" />
+
+    <TextView
+        android:id="@+id/contentTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/dashboard_text_dark"
+        android:textSize="@dimen/dashboard_large_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/titleTextView"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        tools:text="18%" />
+
+    <View
+        android:id="@+id/bottomDivider"
+        style="@style/DividerStyle"
+        android:layout_width="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/titleTextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</merge>

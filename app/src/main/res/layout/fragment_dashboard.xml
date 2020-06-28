@@ -10,7 +10,7 @@
     <com.andrewkingmarshall.beachbuddy.ui.views.CurrentWeatherView
         android:id="@+id/currentWeatherView"
         android:layout_width="wrap_content"
-        android:layout_height="180dp"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,6 +20,14 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/currentWeatherView"
         app:layout_constraintTop_toTopOf="@id/currentWeatherView" />
+
+    <com.andrewkingmarshall.beachbuddy.ui.views.BeachConditionsView
+        android:id="@+id/beachConditionsView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/currentWeatherView"
+        app:layout_constraintTop_toBottomOf="@id/currentWeatherView"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <com.andrewkingmarshall.beachbuddy.ui.views.LeaderBoardView
         android:id="@+id/leaderBoardView"

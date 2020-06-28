@@ -11,13 +11,10 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 
 import com.andrewkingmarshall.beachbuddy.R
-import com.andrewkingmarshall.beachbuddy.database.realmObjects.Score
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.User
 import com.andrewkingmarshall.beachbuddy.extensions.toast
 import com.andrewkingmarshall.beachbuddy.ui.views.LeaderBoardView
-import com.andrewkingmarshall.beachbuddy.ui.views.ManageUserScoresView
 import com.andrewkingmarshall.beachbuddy.viewmodels.DashboardAndroidViewModel
-import com.andrewkingmarshall.beachbuddy.viewmodels.RequestedItemAndroidViewModel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 class DashboardFragment : Fragment() {
@@ -46,20 +43,21 @@ class DashboardFragment : Fragment() {
 
         navController = Navigation.findNavController(view)
 
-        setUpCurrentWeather()
+        setUpWeatherViews()
 
         setUpLeaderboard()
 
         viewModel.showToast.observe(viewLifecycleOwner, Observer { it.toast(requireContext()) })
     }
 
-    private fun setUpCurrentWeather() {
+    private fun setUpWeatherViews() {
         viewModel.getCurrentWeather().observe(viewLifecycleOwner, Observer {
             if (it == null) {
                 return@Observer
             }
 
             currentWeatherView.setWeather(it)
+            beachConditionsView.setWeather(it)
         })
     }
 

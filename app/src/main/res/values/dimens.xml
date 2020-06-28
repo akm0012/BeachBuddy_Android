@@ -16,4 +16,7 @@
 
     <dimen name="grid_item_offset">20dp</dimen>
 
+    <dimen name="dashboard_first_column_width">230dp</dimen>
+
+
 </resources>
