@@ -59,6 +59,12 @@ class DashboardRepository {
         return Transformations.map(findHourlyWeatherInfos(realm)) { realm.copyFromRealm(it) }
     }
 
+    fun getDailyWeatherInfo(realm: Realm): LiveData<List<DailyWeatherInfo>> {
+
+        // Note: Not refreshing Dashboard as of now
+        return Transformations.map(findDailyWeatherInfos(realm)) { realm.copyFromRealm(it) }
+    }
+
     fun refreshDashBoard() {
         jobManager.addJobInBackground(GetDashboardJob())
     }

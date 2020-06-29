@@ -1,13 +1,9 @@
 package com.andrewkingmarshall.beachbuddy.job
 
-import com.andrewkingmarshall.beachbuddy.database.realmObjects.CurrentWeather
-import com.andrewkingmarshall.beachbuddy.database.realmObjects.HourlyWeatherInfo
-import com.andrewkingmarshall.beachbuddy.database.realmObjects.SunsetInfo
-import com.andrewkingmarshall.beachbuddy.database.realmObjects.User
+import com.andrewkingmarshall.beachbuddy.database.realmObjects.*
 import com.andrewkingmarshall.beachbuddy.eventbus.GetDashboardEvent
 import com.andrewkingmarshall.beachbuddy.extensions.save
 import com.andrewkingmarshall.beachbuddy.inject.AppComponent
-import com.andrewkingmarshall.beachbuddy.network.dtos.DashboardDto
 import com.andrewkingmarshall.beachbuddy.network.service.ApiService
 import com.birbit.android.jobqueue.Params
 import com.birbit.android.jobqueue.RetryConstraint
@@ -16,6 +12,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 const val NumOfHoursToSave = 24
+const val NumOfDaysToSave = 8
 
 class GetDashboardJob : BaseJob(
     Params(UI_HIGH).requireNetwork()
@@ -60,9 +57,8 @@ class GetDashboardJob : BaseJob(
             Timber.w(e, "Unable to process CurrentWeather. Skipping it. ${dashboardDto.weatherDto}")
         }
 
-        val hourlyInfoToSave = ArrayList<HourlyWeatherInfo>()
-
         // Hourly Weather
+        val hourlyInfoToSave = ArrayList<HourlyWeatherInfo>()
         repeat(NumOfHoursToSave) {
             try {
                 val hourlyWeatherInfo = HourlyWeatherInfo(it, dashboardDto.weatherDto.hourly[it])
@@ -72,6 +68,18 @@ class GetDashboardJob : BaseJob(
             }
         }
         hourlyInfoToSave.save()
+
+        // Daily Weather
+        val dailyInfoToSave = ArrayList<DailyWeatherInfo>()
+        repeat(NumOfDaysToSave) {
+            try {
+                val dailyWeatherInfo = DailyWeatherInfo(it, dashboardDto.weatherDto.daily[it])
+                dailyInfoToSave.add(dailyWeatherInfo)
+            } catch (e: Exception) {
+                Timber.w(e, "Unable to process Daily Weather. Skipping Index $it")
+            }
+        }
+        dailyInfoToSave.save()
 
         // Sunset Info
         try {

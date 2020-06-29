@@ -49,6 +49,8 @@ class DashboardFragment : Fragment() {
 
         setUpHourlyWeatherView()
 
+        setUpDailyWeatherView()
+
         setUpLeaderboard()
 
         viewModel.showToast.observe(viewLifecycleOwner, Observer { it.toast(requireContext()) })
@@ -83,6 +85,11 @@ class DashboardFragment : Fragment() {
     private fun setUpHourlyWeatherView() {
         viewModel.getHourlyWeatherInfo().observe(viewLifecycleOwner, Observer {
             hourlyWeatherView.setWeather(it)
+        })
+    }
+
+    private fun setUpDailyWeatherView() {
+        viewModel.getDailyWeatherInfo().observe(viewLifecycleOwner, Observer {
             dailyWeatherView.setWeather(it)
         })
     }

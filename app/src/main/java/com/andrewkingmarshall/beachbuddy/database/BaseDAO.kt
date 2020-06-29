@@ -46,6 +46,13 @@ fun findHourlyWeatherInfos(realm: Realm): LiveRealmData<HourlyWeatherInfo> {
     )
 }
 
+fun findDailyWeatherInfos(realm: Realm): LiveRealmData<DailyWeatherInfo> {
+    return LiveRealmData(
+        realm.where(DailyWeatherInfo::class.java)
+            .findAllAsync()
+    )
+}
+
 fun findCurrentSunsetInfo(realm: Realm): LiveRealmData<SunsetInfo> {
     return LiveRealmData(
         realm.where(SunsetInfo::class.java)

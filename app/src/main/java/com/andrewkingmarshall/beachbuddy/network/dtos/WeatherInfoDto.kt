@@ -8,5 +8,7 @@ data class WeatherInfoDto(
 
     var current: CurrentWeatherDto,
 
-    var hourly: List<HourlyWeatherDto>
+    var hourly: List<HourlyWeatherDto>,
+
+    var daily: List<DailyWeatherDto>
 )
