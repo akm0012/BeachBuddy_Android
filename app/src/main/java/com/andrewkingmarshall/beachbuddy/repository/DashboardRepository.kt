@@ -53,6 +53,18 @@ class DashboardRepository {
         }
     }
 
+    fun getCurrentUvIndex(realm: Realm): LiveData<CurrentUvInfo?> {
+
+        // Note: Not refreshing Dashboard as of now
+        return Transformations.map(findCurrentUvIndex(realm)) {
+            if (it.isNotEmpty()) {
+                realm.copyFromRealm(it.first())
+            } else {
+                null
+            }
+        }
+    }
+
     fun getHourlyWeatherInfo(realm: Realm): LiveData<List<HourlyWeatherInfo>> {
 
         // Note: Not refreshing Dashboard as of now

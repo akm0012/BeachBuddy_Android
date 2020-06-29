@@ -57,6 +57,14 @@ class GetDashboardJob : BaseJob(
             Timber.w(e, "Unable to process CurrentWeather. Skipping it. ${dashboardDto.weatherDto}")
         }
 
+        // Current UV Index
+        try {
+            val currentUvInfo = CurrentUvInfo(dashboardDto.currentUvDto)
+            currentUvInfo.save()
+        } catch (e: Exception) {
+            Timber.w(e, "Unable to process Current UV Index. Skipping it. ${dashboardDto.currentUvDto}")
+        }
+
         // Hourly Weather
         val hourlyInfoToSave = ArrayList<HourlyWeatherInfo>()
         repeat(NumOfHoursToSave) {

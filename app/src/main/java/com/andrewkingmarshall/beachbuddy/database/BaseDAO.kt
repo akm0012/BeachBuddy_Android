@@ -67,6 +67,13 @@ fun findCurrentWeather(realm: Realm): LiveRealmData<CurrentWeather> {
     )
 }
 
+fun findCurrentUvIndex(realm: Realm): LiveRealmData<CurrentUvInfo> {
+    return LiveRealmData(
+        realm.where(CurrentUvInfo::class.java)
+            .findAllAsync()
+    )
+}
+
 fun findAllUsersForLeaderBoard(realm: Realm): LiveRealmData<User> {
     return LiveRealmData(
         realm.where(User::class.java)

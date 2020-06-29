@@ -16,6 +16,7 @@ import com.andrewkingmarshall.beachbuddy.extensions.toast
 import com.andrewkingmarshall.beachbuddy.ui.views.LeaderBoardView
 import com.andrewkingmarshall.beachbuddy.viewmodels.DashboardAndroidViewModel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+import timber.log.Timber
 
 class DashboardFragment : Fragment() {
 
@@ -46,6 +47,8 @@ class DashboardFragment : Fragment() {
         setUpSunsetView()
 
         setUpCurrentWeatherAndBeachConditions()
+
+        setUpCurrentUvIndex()
 
         setUpHourlyWeatherView()
 
@@ -79,6 +82,17 @@ class DashboardFragment : Fragment() {
 
             currentWeatherView.setWeather(it)
             beachConditionsView.setWeather(it)
+        })
+    }
+
+    private fun setUpCurrentUvIndex() {
+        viewModel.getCurrentUvIndex().observe(viewLifecycleOwner, Observer {
+            if (it == null) {
+                return@Observer
+            }
+
+            // todo
+            Timber.d(it.toString())
         })
     }
 

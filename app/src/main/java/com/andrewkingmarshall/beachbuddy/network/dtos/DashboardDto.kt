@@ -8,6 +8,9 @@ data class DashboardDto(
 
     var beachConditions: BeachConditionsDto,
 
+    @SerializedName("dashboardUvDto")
+    var currentUvDto: CurrentUvDto,
+
     @SerializedName("weatherInfo")
     var weatherDto: WeatherInfoDto
 

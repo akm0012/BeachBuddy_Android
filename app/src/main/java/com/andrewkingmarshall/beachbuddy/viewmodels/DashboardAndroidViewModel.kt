@@ -39,6 +39,10 @@ class DashboardAndroidViewModel(application: Application) : AndroidViewModel(app
         return dashboardRepository.getCurrentWeather(realm)
     }
 
+    fun getCurrentUvIndex(): LiveData<CurrentUvInfo?> {
+        return dashboardRepository.getCurrentUvIndex(realm)
+    }
+
     fun getHourlyWeatherInfo(): LiveData<List<HourlyWeatherInfo>> {
         return dashboardRepository.getHourlyWeatherInfo(realm)
     }
