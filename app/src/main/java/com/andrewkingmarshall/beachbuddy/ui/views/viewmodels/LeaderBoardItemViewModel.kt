@@ -33,7 +33,7 @@ class LeaderBoardItemViewModel(var user: User) {
             else -> highScore.name
         }
 
-        return "Best Game: $highScoreGame (${highScore.winCount})"
+        return "$highScoreGame (${highScore.winCount})"
     }
 
     fun getScore(): String {
