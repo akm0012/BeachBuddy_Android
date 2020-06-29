@@ -109,6 +109,8 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
     implementation 'com.afollestad.material-dialogs:input:3.3.0'
 
+    // Sun Progression View
+    implementation 'com.github.andy6804tw:SunView-lib:2.0.4'
 
     testImplementation 'junit:junit:4.13'
     testImplementation "joda-time:joda-time:2.10.1"

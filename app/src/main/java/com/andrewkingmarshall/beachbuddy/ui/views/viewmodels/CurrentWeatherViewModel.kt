@@ -6,11 +6,8 @@ import android.location.Geocoder
 import androidx.annotation.ColorRes
 import com.andrewkingmarshall.beachbuddy.R
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.CurrentWeather
-import com.andrewkingmarshall.beachbuddy.enums.FlagColor
 import com.andrewkingmarshall.beachbuddy.enums.FlagColor.*
 import com.andrewkingmarshall.beachbuddy.inject.Injector
-import org.joda.time.DateTimeZone
-import org.joda.time.format.DateTimeFormat
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.roundToInt

@@ -1,28 +1,35 @@
 package com.andrewkingmarshall.beachbuddy.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-
 import com.andrewkingmarshall.beachbuddy.R
 import com.andrewkingmarshall.beachbuddy.database.realmObjects.User
 import com.andrewkingmarshall.beachbuddy.extensions.toast
 import com.andrewkingmarshall.beachbuddy.ui.views.LeaderBoardView
+import com.andrewkingmarshall.beachbuddy.ui.views.viewmodels.CurrentUvViewModel
 import com.andrewkingmarshall.beachbuddy.viewmodels.DashboardAndroidViewModel
+import com.badoo.mobile.util.WeakHandler
 import kotlinx.android.synthetic.main.fragment_dashboard.*
-import timber.log.Timber
+import java.util.*
+
+private const val AUTO_UPDATE_MILLIS = 5 * 60 * 1000L // 5 min
 
 class DashboardFragment : Fragment() {
 
     lateinit var viewModel: DashboardAndroidViewModel
 
     lateinit var navController: NavController
+
+    private var timer = Timer()
+    private var handler: WeakHandler = WeakHandler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,11 +51,11 @@ class DashboardFragment : Fragment() {
 
         navController = Navigation.findNavController(view)
 
+        setUpSwipeToRefresh()
+
         setUpSunsetView()
 
         setUpCurrentWeatherAndBeachConditions()
-
-        setUpCurrentUvIndex()
 
         setUpHourlyWeatherView()
 
@@ -82,17 +89,7 @@ class DashboardFragment : Fragment() {
 
             currentWeatherView.setWeather(it)
             beachConditionsView.setWeather(it)
-        })
-    }
-
-    private fun setUpCurrentUvIndex() {
-        viewModel.getCurrentUvIndex().observe(viewLifecycleOwner, Observer {
-            if (it == null) {
-                return@Observer
-            }
-
-            // todo
-            Timber.d(it.toString())
+            currentUvView.setViewModel(CurrentUvViewModel(it))
         })
     }
 
@@ -116,7 +113,7 @@ class DashboardFragment : Fragment() {
                 }
 
                 override fun onUserClicked(user: User) {
-                    navController.navigate(R.id.action_dashboardFragment_to_scoreManagementFragment)
+                    currentUvView.showSafeExposureTimeForSkinType(user.skinType)
                 }
             })
         })
@@ -125,13 +122,48 @@ class DashboardFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        startAutoUpdateTimer()
         sunsetTimerView.startTimer()
     }
 
     override fun onPause() {
         super.onPause()
 
+        stopAutoUpdateTimer()
         sunsetTimerView.stopTimer()
     }
 
+    private fun setUpSwipeToRefresh() {
+        dashboardSwipeRefreshLayout.setColorSchemeColors(
+            ContextCompat.getColor(requireContext(), R.color.colorPrimary),
+            ContextCompat.getColor(requireContext(), R.color.colorAccent)
+        )
+        dashboardSwipeRefreshLayout.setOnRefreshListener { viewModel.onPullToRefresh() }
+        viewModel.showLoadingEvent.observe(
+            viewLifecycleOwner,
+            Observer { dashboardSwipeRefreshLayout.isRefreshing = it })
+    }
+
+
+    private fun startAutoUpdateTimer() {
+        timer = Timer()
+        val myTimerTask = MyTimerTask()
+        timer.schedule(myTimerTask, AUTO_UPDATE_MILLIS, AUTO_UPDATE_MILLIS)
+    }
+
+    private fun stopAutoUpdateTimer() {
+        timer.cancel()
+    }
+
+    inner class MyTimerTask : TimerTask() {
+        override fun run() {
+            handler.post(MyRunnable())
+        }
+    }
+
+    inner class MyRunnable : Runnable {
+        override fun run() {
+            viewModel.onAutoUpdatePeriodHit()
+        }
+    }
 }

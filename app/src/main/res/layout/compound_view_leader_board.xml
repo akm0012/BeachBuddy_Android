@@ -21,10 +21,10 @@
 
             <TextView
                 android:id="@+id/titleTextView"
-                android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
-                android:paddingStart="@dimen/standard_padding"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingStart="@dimen/standard_padding"
                 android:text="@string/leaderboard"
                 android:textColor="@color/dashboard_text_dark"
                 android:textSize="@dimen/dashboard_large_text_size"
@@ -49,6 +49,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
+                android:overScrollMode="never"
+                android:paddingBottom="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

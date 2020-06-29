@@ -44,6 +44,7 @@ class GetDashboardJob : BaseJob(
                 usersToSave.add(User(userDto))
             } catch (e: Exception) {
                 Timber.w(e, "Unable to process item. Skipping it. $userDto")
+                EventBus.getDefault().post(GetDashboardEvent(false, e))
                 continue
             }
         }
@@ -51,18 +52,15 @@ class GetDashboardJob : BaseJob(
 
         // Current Weather Info
         try {
-            val currentWeather = CurrentWeather(dashboardDto.weatherDto, dashboardDto.beachConditions)
+            val currentWeather = CurrentWeather(
+                dashboardDto.weatherDto,
+                dashboardDto.beachConditions,
+                dashboardDto.currentUvDto
+            )
             currentWeather.save()
         } catch (e: Exception) {
             Timber.w(e, "Unable to process CurrentWeather. Skipping it. ${dashboardDto.weatherDto}")
-        }
-
-        // Current UV Index
-        try {
-            val currentUvInfo = CurrentUvInfo(dashboardDto.currentUvDto)
-            currentUvInfo.save()
-        } catch (e: Exception) {
-            Timber.w(e, "Unable to process Current UV Index. Skipping it. ${dashboardDto.currentUvDto}")
+            EventBus.getDefault().post(GetDashboardEvent(false, e))
         }
 
         // Hourly Weather
@@ -73,6 +71,7 @@ class GetDashboardJob : BaseJob(
                 hourlyInfoToSave.add(hourlyWeatherInfo)
             } catch (e: Exception) {
                 Timber.w(e, "Unable to process Hourly Weather. Skipping Index $it")
+                EventBus.getDefault().post(GetDashboardEvent(false, e))
             }
         }
         hourlyInfoToSave.save()
@@ -85,6 +84,7 @@ class GetDashboardJob : BaseJob(
                 dailyInfoToSave.add(dailyWeatherInfo)
             } catch (e: Exception) {
                 Timber.w(e, "Unable to process Daily Weather. Skipping Index $it")
+                EventBus.getDefault().post(GetDashboardEvent(false, e))
             }
         }
         dailyInfoToSave.save()
@@ -95,6 +95,7 @@ class GetDashboardJob : BaseJob(
             sunsetInfo.save()
         } catch (e: Exception) {
             Timber.w(e, "Unable to process SunsetInfo. Skipping it. $dashboardDto.weatherDto")
+            EventBus.getDefault().post(GetDashboardEvent(false, e))
         }
 
         EventBus.getDefault().post(GetDashboardEvent(true))

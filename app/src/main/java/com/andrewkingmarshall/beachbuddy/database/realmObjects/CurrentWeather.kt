@@ -1,6 +1,7 @@
 package com.andrewkingmarshall.beachbuddy.database.realmObjects
 
 import com.andrewkingmarshall.beachbuddy.network.dtos.BeachConditionsDto
+import com.andrewkingmarshall.beachbuddy.network.dtos.CurrentUvDto
 import com.andrewkingmarshall.beachbuddy.network.dtos.WeatherInfoDto
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
@@ -41,11 +42,17 @@ open class CurrentWeather(
 
     var iconTemplate: String = "",
 
-    var beachConditions: BeachConditions? = null
+    var beachConditions: BeachConditions? = null,
+
+    var currentUvInfo: CurrentUvInfo? = null
 
 ) : RealmObject() {
 
-    constructor(weatherDto: WeatherInfoDto, beachConditionsDto: BeachConditionsDto) : this() {
+    constructor(
+        weatherDto: WeatherInfoDto,
+        beachConditionsDto: BeachConditionsDto?,
+        uvDto: CurrentUvDto?
+    ) : this() {
 
         val currentWeatherDto = weatherDto.current
 
@@ -66,7 +73,9 @@ open class CurrentWeather(
         secondaryDescription = currentWeatherDto.weather[0].description
         iconTemplate = currentWeatherDto.weather[0].icon
 
-        beachConditions = BeachConditions(beachConditionsDto)
+        beachConditions = beachConditionsDto?.let { BeachConditions(it) }
+
+        currentUvInfo = uvDto?.let { CurrentUvInfo(it) }
     }
 
 

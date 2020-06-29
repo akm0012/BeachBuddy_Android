@@ -64,5 +64,13 @@
     <color name="flag_red">#DF2F08</color>
     <color name="flag_purple">#633396</color>
 
+    <color name="sun_orange">#F87748</color>
+
+    <color name="uv_low">#558B2F</color>
+    <color name="uv_moderate">#F9A825</color>
+    <color name="uv_high">#EF6C00</color>
+    <color name="uv_very_high">#B71C1C</color>
+    <color name="uv_extreme">#6A1B9A</color>
+
 
 </resources>

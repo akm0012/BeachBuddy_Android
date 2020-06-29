@@ -45,7 +45,9 @@ class BeachConditionItemViewModel(
                 "${weatherInfo.cloudPercent}%"
             }
 
-            WIND -> "${weatherInfo.windSpeed} mph ${weatherInfo.windDeg}°"
+            WIND -> {
+                "${weatherInfo.windSpeed.toInt()} mph ${weatherInfo.windDeg}°"
+            }
 
             RESPIRATORY_IRRITATION -> weatherInfo.beachConditions?.respiratoryIrritation?.capitalizeWords()
                 ?: "N/A"
