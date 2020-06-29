@@ -44,6 +44,7 @@ class HourlyWeatherView : FrameLayout {
 
         } else {
             adapter?.updateDataSet(flexibleItemList, true)
+            adapter?.smoothScrollToPosition(0)
         }
     }
 }
