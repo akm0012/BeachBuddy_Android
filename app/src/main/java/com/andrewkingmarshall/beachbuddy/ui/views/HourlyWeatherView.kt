@@ -44,7 +44,9 @@ class HourlyWeatherView : FrameLayout {
 
         } else {
             adapter?.updateDataSet(flexibleItemList, true)
-            adapter?.smoothScrollToPosition(0)
+            if (flexibleItemList.isNotEmpty()) {
+                hourlyWeatherRecyclerView?.smoothScrollToPosition(0)
+            }
         }
     }
 }
