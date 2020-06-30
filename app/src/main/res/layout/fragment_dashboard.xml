@@ -7,77 +7,81 @@
     android:background="@color/off_white"
     tools:context=".ui.fragments.DashboardFragment">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/dashboardSwipeRefreshLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <com.andrewkingmarshall.beachbuddy.ui.views.CurrentWeatherView
+            android:id="@+id/currentWeatherView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.andrewkingmarshall.beachbuddy.ui.views.CurrentWeatherView
-                android:id="@+id/currentWeatherView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <com.andrewkingmarshall.beachbuddy.ui.views.SunsetTimerView
+            android:id="@+id/sunsetTimerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/currentWeatherView"
+            app:layout_constraintTop_toTopOf="@id/currentWeatherView" />
 
-            <com.andrewkingmarshall.beachbuddy.ui.views.SunsetTimerView
-                android:id="@+id/sunsetTimerView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/currentWeatherView"
-                app:layout_constraintTop_toTopOf="@id/currentWeatherView" />
+        <com.andrewkingmarshall.beachbuddy.ui.views.CurrentUvView
+            android:id="@+id/currentUvView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/hourlyWeatherView"
+            app:layout_constraintEnd_toStartOf="@id/leaderBoardView"
+            app:layout_constraintStart_toEndOf="@id/sunsetTimerView"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.andrewkingmarshall.beachbuddy.ui.views.CurrentUvView
-                android:id="@+id/currentUvView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@id/hourlyWeatherView"
-                app:layout_constraintEnd_toStartOf="@id/leaderBoardView"
-                app:layout_constraintStart_toEndOf="@id/sunsetTimerView"
-                app:layout_constraintTop_toTopOf="parent" />
+        <com.andrewkingmarshall.beachbuddy.ui.views.BeachConditionsView
+            android:id="@+id/beachConditionsView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/currentWeatherView"
+            app:layout_constraintTop_toBottomOf="@id/currentWeatherView" />
 
-            <com.andrewkingmarshall.beachbuddy.ui.views.BeachConditionsView
-                android:id="@+id/beachConditionsView"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/currentWeatherView"
-                app:layout_constraintTop_toBottomOf="@id/currentWeatherView" />
+        <com.andrewkingmarshall.beachbuddy.ui.views.HourlyWeatherView
+            android:id="@+id/hourlyWeatherView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/dailyWeatherView"
+            app:layout_constraintEnd_toStartOf="@id/leaderBoardView"
+            app:layout_constraintStart_toEndOf="@id/beachConditionsView"
+            app:layout_constraintTop_toBottomOf="@id/sunsetTimerView" />
 
-            <com.andrewkingmarshall.beachbuddy.ui.views.HourlyWeatherView
-                android:id="@+id/hourlyWeatherView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@id/dailyWeatherView"
-                app:layout_constraintEnd_toStartOf="@id/leaderBoardView"
-                app:layout_constraintStart_toEndOf="@id/beachConditionsView"
-                app:layout_constraintTop_toBottomOf="@id/sunsetTimerView" />
+        <com.andrewkingmarshall.beachbuddy.ui.views.DailyWeatherView
+            android:id="@+id/dailyWeatherView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/leaderBoardView"
+            app:layout_constraintStart_toEndOf="@id/beachConditionsView"
+            app:layout_constraintTop_toBottomOf="@id/hourlyWeatherView" />
 
-            <com.andrewkingmarshall.beachbuddy.ui.views.DailyWeatherView
-                android:id="@+id/dailyWeatherView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/leaderBoardView"
-                app:layout_constraintStart_toEndOf="@id/beachConditionsView"
-                app:layout_constraintTop_toBottomOf="@id/hourlyWeatherView" />
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/dashboardSwipeRefreshLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/currentWeatherView"
+            app:layout_constraintEnd_toEndOf="@id/leaderBoardView"
+            app:layout_constraintStart_toStartOf="@id/currentWeatherView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@color/light_gray_50_percent_opacity">
 
-            <com.andrewkingmarshall.beachbuddy.ui.views.LeaderBoardView
-                android:id="@+id/leaderBoardView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.andrewkingmarshall.beachbuddy.ui.views.LeaderBoardView
+            android:id="@+id/leaderBoardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
