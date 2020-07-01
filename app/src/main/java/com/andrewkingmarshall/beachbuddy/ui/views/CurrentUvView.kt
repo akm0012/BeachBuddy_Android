@@ -33,12 +33,17 @@ class CurrentUvView : FrameLayout {
             setEndTime(viewModel.getSunViewEndTime())
             setCurrentTime(viewModel.getSunViewCurrentTime())
             setArcSolidColor(ContextCompat.getColor(context, viewModel.getUvColor()))
+            sunView.invalidate()
+        }
+
+        if (safeExposureTimeTextView.visibility == View.VISIBLE) {
+            safeExposureTimeTextView.text = viewModel.getTimeToBurn(null)
         }
 
         uvIndexTextView.text = viewModel.getUvIndex()
     }
 
-    fun showSafeExposureTimeForSkinType(skinType: Int) {
+    fun showSafeExposureTimeForSkinType(skinType: Int?) {
         safeExposureTimeTextView.text = viewModel?.getTimeToBurn(skinType)
 
         safeExposureTitle.visibility = View.VISIBLE

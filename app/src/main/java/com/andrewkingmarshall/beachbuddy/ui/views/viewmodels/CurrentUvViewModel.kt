@@ -13,6 +13,8 @@ class CurrentUvViewModel(
     private val currentWeather: CurrentWeather
 ) {
 
+    private var lastLoadedSkinType: Int? = null
+
     fun getSunViewStartTime(): String {
         return DateTime(currentWeather.sunrise * 1000).withZone(DateTimeZone.getDefault()).toString("H:mm")
     }
@@ -62,7 +64,15 @@ class CurrentUvViewModel(
         return roundedUvIndex.toString()
     }
 
-    fun getTimeToBurn(skinType: Int): String {
+    fun getTimeToBurn(skinType: Int?): String {
+
+        var skinTypeToUse = skinType
+
+        if (skinType == null) {
+            skinTypeToUse = lastLoadedSkinType
+        } else {
+            lastLoadedSkinType = skinType
+        }
 
         try {
             val uvIndex = getUvIndex().toDouble()
@@ -71,7 +81,7 @@ class CurrentUvViewModel(
                 return "∞"
             }
 
-            val skinTypeMultiplier = when (skinType) {
+            val skinTypeMultiplier = when (skinTypeToUse) {
                 1 -> 2.5
                 2 -> 3.0
                 3 -> 4.0
