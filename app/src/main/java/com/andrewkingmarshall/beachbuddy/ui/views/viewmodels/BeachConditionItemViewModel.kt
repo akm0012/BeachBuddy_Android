@@ -54,7 +54,7 @@ class BeachConditionItemViewModel(
 
             SURF -> {
 
-                val surfOverview = weatherInfo.beachConditions?.surf?.capitalizeWords()
+                val surfOverview = weatherInfo.beachConditions?.surfCondition?.capitalizeWords()
                     ?: "N/A"
 
                 var surfHeight = weatherInfo.beachConditions?.surfHeight?.capitalizeWords()
